@@ -10,7 +10,8 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:emaildev-utilities.helloWorld"
+		"onCommand:emaildev-utilities.helloWorld",
+		"onCommand:emaildev-utilities.replaceLineHeight"
 	],
 	"main": "./extension.js",
 	"contributes": {
@@ -19,8 +20,30 @@
 				"command": "emaildev-utilities.helloWorld",
 				"category": "EDU",
 				"title": "Hello World"
+			},
+			{
+				"command": "emaildev-utilities.replaceLineHeight",
+				"category": "EDU",
+				"title": "Replace line-height"
 			}
-		]
+		],
+		"viewsContainers": {
+			"activitybar": [
+				{
+					"id": "emaildev-utilities-explorer",
+					"title": "EmailDev Utilities",
+					"icon": "src/media/icon.svg"
+				}
+			]
+		},
+		"views": {
+			"emaildev-utilities-explorer": [
+				{
+					"id": "emaildev-utilities-dependencies",
+					"name": "Tools"
+				}
+			]
+		}
 	},
 	"scripts": {
 		"lint": "eslint .",

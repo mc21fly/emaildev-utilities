@@ -10,25 +10,61 @@ const vscode = require('vscode');
  */
 function activate(context) {
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "emaildev-utilities" is now active!');
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with  registerCommand
-	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('emaildev-utilities.helloWorld', function () {
-		// The code you place here will be executed every time your command is executed
+	context.subscriptions.push(vscode.window.registerWebviewViewProvider("emaildev-utilities-explorer"))
 
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from EmailDev Utilities!');
-	});
+	context.subscriptions.push(vscode.commands.registerCommand('emaildev-utilities.helloWorld', async () => {
 
-	context.subscriptions.push(disposable);
+	}));
+
+	context.subscriptions.push(vscode.commands.registerCommand('emaildev-utilities.replaceLineHeight', async () => {
+
+		const pairs = [
+			new Pair(11, 14),
+			new Pair(14, 14),
+			new Pair(14, 17),
+			new Pair(14, 21),
+			new Pair(14, 22),
+			new Pair(18, 24),
+			new Pair(20, 28),
+			new Pair(22, 26),
+			new Pair(24, 28)
+		]
+		const answer = await vscode.window.showQuickPick(pairs.map(pair => pair.getValuesString()));
+
+		pairs.forEach(pair => {
+			if (pair.getValuesString().match(answer)) console.log(pair.getCalculatedValues(), pair.getCalculatedValuesString())
+		})
+
+	}));
 }
 
 // this method is called when your extension is deactivated
-function deactivate() {}
+function deactivate() { }
+
+class Pair {
+	constructor(fontSize, lineHeight) {
+		this.fontSize = fontSize;
+		this.lineHeight = lineHeight;
+	}
+
+	getValuesString() {
+		return `font-size: ${this.fontSize}px; line-height: ${this.lineHeight}px;`
+	}
+
+	getCalculatedValues() {
+		const lineHeight = parseFloat((this.lineHeight / this.fontSize).toFixed(2));
+		const lineHeightPercent = Math.floor(((this.lineHeight / this.fontSize) - 1) / 2 * 100 + 100);
+
+		return { fontSize: this.fontSize, lineHeight: lineHeight, lineHeightPercent: lineHeightPercent }
+	}
+
+	getCalculatedValuesString() {
+		return `font-size: ${this.getCalculatedValues().fontSize}px; line-height: ${this.getCalculatedValues().lineHeightPercent}%; line-height: ${this.getCalculatedValues().lineHeight}!important`;
+	}
+
+
+}
 
 module.exports = {
 	activate,
