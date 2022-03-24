@@ -1,10 +1,14 @@
 const vscode = require('vscode');
-const Pair = require('./src/Pair');
+const Tracker = require('./src/Tracker');
+const Trackers = require('./src/Trackers');
+// const Pair = require('./src/Pair');
 
 function activate(context) {
+	const trackers = new Trackers;
+
 	context.subscriptions.push(
 		vscode.commands.registerCommand('emaildev-utilities.helloWorld', async () => {
-			console.log('Hello world command!');
+
 		})
 	);
 
@@ -32,22 +36,34 @@ function activate(context) {
 	);
 
 	context.subscriptions.push(
-		vscode.commands.registerCommand('emaildev-utilities.checkForRoles', async () => {
-			let doc = vscode.window.activeTextEditor.document.getText();
-			const numberOfTables = (doc.match(/<table[^>]*>/gm) || []).length;
-			const numberOfTablesWithRoles = (doc.match(/<table[^>]*role="presentation"[^>]*>/gm) || []).length;
-			const diff = numberOfTables - numberOfTablesWithRoles;
+		vscode.commands.registerCommand('emaildev-utilities.checkForAttributes', async () => {
+			const doc = vscode.window.activeTextEditor.document.getText();
+			const allTables = (doc.match(/<table[^>]*>/gm) || []);
+			const tablesWithAttributes = (doc.match(/<table[^>]*(?=.*?role="presentation")(?=.*?cellpadding="0")(?=.*?cellspacing="0")(?=.*?border="0")[^>]*>/gm) || []);
+			const tablesWithoutAttributes = allTables.filter(table => !tablesWithAttributes.includes(table));
 
-			if (numberOfTablesWithRoles < numberOfTables) {
-				vscode.window.showWarningMessage(`Number of tables without role="presentation": ${diff}`);
+			if (tablesWithAttributes.length < allTables.length) {
+				const decission = await vscode.window.showWarningMessage(`Number of tables without needed attributes: ${allTables.length - tablesWithAttributes.length}`, "Dismiss", "Repair", "Track");
+				if (decission.match("Repair")) {
+					console.log("Repair tables")
+				} else if (decission.match("Track")) {
+					tablesWithoutAttributes.forEach(() => trackers.add());
+					trackers.set(tablesWithoutAttributes)
+				}
 			} else {
-				vscode.window.showInformationMessage(`All tables have role="presentation" set.`);
+				vscode.window.showInformationMessage(`All tables have needed attributes set.`);
 			}
 		})
 	);
+
+	context.subscriptions.push(
+		vscode.commands.registerCommand('emaildev-utilities.untrack', async () => {
+			trackers.disposeAll();
+		})
+	)
 }
 
-function deactivate() {}
+function deactivate() { }
 
 module.exports = {
 	activate,

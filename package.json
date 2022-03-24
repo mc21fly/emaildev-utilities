@@ -12,7 +12,8 @@
 	"activationEvents": [
 		"onCommand:emaildev-utilities.helloWorld",
 		"onCommand:emaildev-utilities.replaceLineHeight",
-		"onCommand:emaildev-utilities.checkForRoles"
+		"onCommand:emaildev-utilities.checkForAttributes",
+		"onCommand:emaildev-utilities.untrack"
 	],
 	"main": "./extension.js",
 	"contributes": {
@@ -28,9 +29,14 @@
 				"title": "Replace line-height"
 			},
 			{
-				"command": "emaildev-utilities.checkForRoles",
+				"command": "emaildev-utilities.checkForAttributes",
 				"category": "EDU",
 				"title": "Check for tables role"
+			},
+			{
+				"command": "emaildev-utilities.untrack",
+				"category": "EDU",
+				"title": "Untrack"
 			}
 		],
 		"viewsContainers": {
@@ -49,6 +55,17 @@
 					"name": "Tools"
 				}
 			]
+		},
+		"configuration": {
+			"type": "object",
+			"title": "EmailDev Utilities",
+			"properties": {
+				"emaildev-utilities.isEnable": {
+					"type": "boolean",
+					"default": true,
+					"description": "Enable or disable EDU"
+				}
+			}
 		}
 	},
 	"scripts": {
