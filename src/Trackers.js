@@ -15,6 +15,7 @@ class Trackers {
 
     disposeAll() {
         this.trackers.forEach(tracker => tracker.dispose());
+        this.trackers = [];
     }
 }
 

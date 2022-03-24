@@ -11,8 +11,8 @@
 	],
 	"activationEvents": [
 		"onCommand:emaildev-utilities.helloWorld",
-		"onCommand:emaildev-utilities.replaceLineHeight",
-		"onCommand:emaildev-utilities.checkForAttributes",
+		"onCommand:emaildev-utilities.highlightStyles",
+		"onCommand:emaildev-utilities.highlightTables",
 		"onCommand:emaildev-utilities.untrack"
 	],
 	"main": "./extension.js",
@@ -24,14 +24,14 @@
 				"title": "Hello World"
 			},
 			{
-				"command": "emaildev-utilities.replaceLineHeight",
+				"command": "emaildev-utilities.highlightStyles",
 				"category": "EDU",
-				"title": "Replace line-height"
+				"title": "Highlight styles with font-size and line-height"
 			},
 			{
-				"command": "emaildev-utilities.checkForAttributes",
+				"command": "emaildev-utilities.highlightTables",
 				"category": "EDU",
-				"title": "Check for tables role"
+				"title": "Highlight tables without needed attributes"
 			},
 			{
 				"command": "emaildev-utilities.untrack",
