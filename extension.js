@@ -16,12 +16,16 @@ function activate(context) {
 		vscode.commands.registerCommand('emaildev-utilities.highlightStyles', async () => {
 			trackers.disposeAll();
 			const doc = vscode.window.activeTextEditor.document.getText();
-			const attributes = (doc.match(/"[^"]*(?=font-size).*(?=line-height).*"/g) || []);
+			const styles = (doc.match(/"[^"]*(?=font-size:[^\d]*\d+px).*(?=line-height:[^\d]*\d+px).*"/g) || []);
+			const fontSizes = styles.map(style => style.match(/font-size:[^\d]*\d+px/g) || []);
+			const lineHeights = styles.map(style => style.match(/line-height:[^\d]*\d+px/g) || [])
 
-			attributes.forEach(() => trackers.add());
-			trackers.set(attributes)
+			console.log(fontSizes, lineHeights)
 
-			vscode.window.showInformationMessage(`Numbers of styles with font-size and line-height combined: ${attributes.length}`)
+			styles.forEach(() => trackers.add());
+			trackers.set(styles)
+
+			vscode.window.showInformationMessage(`Numbers of styles with font-size and line-height combined: ${styles.length}`)
 		})
 	);
 

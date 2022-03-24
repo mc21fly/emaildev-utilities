@@ -3,7 +3,7 @@ const window = vscode.window;
 
 class Tracker {
     constructor() {
-        this.decoration = window.createTextEditorDecorationType({ backgroundColor: "rgba(255,0,0,0.5)", overviewRulerColor: "rgba(255,0,0,0.5)" });
+        this.decoration = window.createTextEditorDecorationType({ backgroundColor: "rgba(255,0,0,0.5)", overviewRulerColor: "rgba(255,0,0,0.5)", border: '1px dotted red' });
     }
 
     track(table) {
