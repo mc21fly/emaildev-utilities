@@ -39,7 +39,7 @@
 		"views": {
 			"emaildev-utilities-explorer": [
 				{
-					"id": "emaildev-utilities-dependencies",
+					"id": "emaildev-utilities-view",
 					"name": "Tools"
 				}
 			]
