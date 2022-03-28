@@ -57,13 +57,37 @@
 			]
 		},
 		"configuration": {
-			"type": "object",
 			"title": "EmailDev Utilities",
 			"properties": {
-				"emaildev-utilities.isEnable": {
+				"emaildev-utilities.warningColor": {
+					"type": "object",
+					"default": {
+						"backgroundColor": "rgba(255, 255, 0, 0.5)",
+						"border": "1px dotted rgba(255, 255, 0, 1)",
+						"color": "rgba(255, 255, 255, 1)",
+						"overviewRulerColor": "rgba(255, 255,0, 0.5)"
+					},
+					"description": "Customize Warning Track colors"
+				},
+				"emaildev-utilities.dangerColor": {
+					"type": "object",
+					"default": {
+						"backgroundColor": "rgba(255, 0, 0, 0.5)",
+						"border": "1px dotted rgba(255, 0, 0, 1)",
+						"color": "rgba(255, 255, 255, 1)",
+						"overviewRulerColor": "rgba(255, 0,0, 0.5)"
+					},
+					"description": "Customize Danger Track colors"
+				},
+				"emaildev-utilities.trackTables": {
 					"type": "boolean",
 					"default": true,
-					"description": "Enable or disable EDU"
+					"description": "Track tables"
+				},
+				"emaildev-utilities.trackStyles": {
+					"type": "boolean",
+					"default": true,
+					"description": "Track styles"
 				}
 			}
 		}
