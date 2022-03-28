@@ -83,6 +83,20 @@ function getStyles() {
 	return styles;
 }
 
+function changeLineHeightValues(style) {
+	const lineHeight = style.match(/line-height:\s*\d+px;/gm);
+	const fontSize = style.match(/font-size:\s*\d+px;/gm);
+	const lineHeightValue = lineHeight[0].match(/\d+/);
+	const fontSizeValue = fontSize[0].match(/\d+/);
+
+	const valueUnitless = (lineHeightValue / fontSizeValue).toFixed(2);
+	const valuePercent = (valueUnitless - 1) / 2 * 100 + 100;
+
+	const replacedStyle = style.replace(/line-height:\s*\d+px;/gm, `line-height: ${valuePercent}%; line-height: ${valueUnitless}!important;`);
+
+	return replacedStyle;
+}
+
 module.exports = {
 	getRanges,
 	getDecorations,
