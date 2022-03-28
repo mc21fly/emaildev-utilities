@@ -13,7 +13,8 @@
 		"onCommand:emaildev-utilities.helloWorld",
 		"onCommand:emaildev-utilities.highlightStyles",
 		"onCommand:emaildev-utilities.highlightTables",
-		"onCommand:emaildev-utilities.untrack"
+		"onCommand:emaildev-utilities.untrack",
+		"*"
 	],
 	"main": "./extension.js",
 	"contributes": {
@@ -79,15 +80,10 @@
 					},
 					"description": "Customize Danger Track colors"
 				},
-				"emaildev-utilities.trackTables": {
+				"emaildev-utilities.isEnabled": {
 					"type": "boolean",
 					"default": true,
-					"description": "Track tables"
-				},
-				"emaildev-utilities.trackStyles": {
-					"type": "boolean",
-					"default": true,
-					"description": "Track styles"
+					"description": "Enable extension"
 				}
 			}
 		}

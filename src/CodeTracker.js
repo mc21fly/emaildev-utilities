@@ -1,12 +1,10 @@
 const vscode = require('vscode');
-const window = vscode.window;
-const textEditor = window.activeTextEditor;
 
 const DECORATIONS = {
 	WARNING: {
 		id: 'warning',
 		decoration: {
-			backgroundColor: 'rgba(255, 255, 0, 0.5)',
+			backgroundColor: 'rgba(255, 255, 0, 0.2)',
 			border: '1px dotted rgba(255, 255, 0, 1)',
 			overviewRulerColor: 'rgba(255, 255,0, 0.5)',
 		},
@@ -14,7 +12,7 @@ const DECORATIONS = {
 	DANGER: {
 		id: 'danger',
 		decoration: {
-			backgroundColor: 'rgba(255, 0, 0, 0.5)',
+			backgroundColor: 'rgba(255, 0, 0, 0.2)',
 			border: '1px dotted rgba(255, 0, 0, 1)',
 			overviewRulerColor: 'rgba(255, 0,0, 0.5)',
 		},
@@ -32,7 +30,7 @@ const DECORATIONS = {
 const ELEMENTS = {
 	TABLE: {
 		id: 'table',
-		rule: /<table[^>]*(?=[^>]*?role="presentation")[^>]*(?=[^>]*?border="0")[^>]*(?=[^>]*?cellpadding="0")[^>]*(?=[^>]*?cellspacing="0")[^>]*>/gm,
+		rule: /<table[^>]*(?![^>]*?role="presentation")[^>]*(?![^>]*?border="0")[^>]*(?![^>]*?cellpadding="0")[^>]*(?![^>]*?cellspacing="0")[^>]*>/gm,
 	},
 	STYLE: {
 		id: 'style',
@@ -41,8 +39,9 @@ const ELEMENTS = {
 };
 
 class CodeTracker {
-	constructor() {
-		this.code = textEditor.document.getText();
+	constructor(textEditor) {
+		this.activeTextEditor = textEditor;
+		this.code = this.activeTextEditor.document.getText();
 		this.activeTracking = [];
 		this.activeTranckigRangesNumber = 0;
 		this.currentAppearanceIndex = 0;
@@ -50,11 +49,11 @@ class CodeTracker {
 
 	track(elementId, type) {
 		this.activeTranckigRangesNumber = 0;
-		const allAppearancesRange = this.getAppearancesRange(elementId);
+		const allAppearancesRange = elementId ? this.getAppearancesRange(elementId) : [];
 		const decorationType = this.getDecoration(type);
 
 		this.addActive(type, decorationType);
-		textEditor.setDecorations(decorationType, allAppearancesRange);
+		this.activeTextEditor.setDecorations(decorationType, allAppearancesRange);
 	}
 
 	dispose() {
@@ -92,7 +91,7 @@ class CodeTracker {
 	getDecoration(type) {
 		for (const decoration in DECORATIONS) {
 			if (DECORATIONS[decoration].id.match(type))
-				return window.createTextEditorDecorationType(DECORATIONS[decoration].decoration);
+				return vscode.window.createTextEditorDecorationType(DECORATIONS[decoration].decoration);
 		}
 	}
 
@@ -100,8 +99,8 @@ class CodeTracker {
 		const appearanceIndex = this.code.indexOf(appearance, this.currentAppearanceIndex);
 		this.currentAppearanceIndex = appearanceIndex + appearance.length;
 
-		const startPos = textEditor.document.positionAt(appearanceIndex);
-		const endPos = textEditor.document.positionAt(appearanceIndex + appearance.length);
+		const startPos = this.activeTextEditor.document.positionAt(appearanceIndex);
+		const endPos = this.activeTextEditor.document.positionAt(appearanceIndex + appearance.length);
 
 		return new vscode.Range(startPos, endPos);
 	}

@@ -2,30 +2,47 @@ let vscode = require('vscode');
 let window = vscode.window;
 let activeEditor = window.activeTextEditor;
 
+const DECORATIONS = {
+	WARNING: {
+		backgroundColor: 'rgba(255, 255, 0, 0.15)',
+		border: '1px dotted rgba(255, 255, 0, 1)',
+		overviewRulerColor: 'rgba(255, 255,0, 0.5)',
+
+	},
+	DANGER: {
+		backgroundColor: 'rgba(255, 0, 0, 0.15)',
+		border: '1px dotted rgba(255, 0, 0, 1)',
+		overviewRulerColor: 'rgba(255, 0,0, 0.5)',
+
+	},
+	DEFAULT: {
+		backgroundColor: 'rgba(255, 255, 0, 0.15)',
+		border: '1px dotted rgba(255, 255, 0, 1)',
+		overviewRulerColor: 'rgba(255, 255,0, 0.5)',
+	},
+};
+
 function getRanges(element) {
 	if (element.match('table')) {
 		const tables = getTablesWithoutAttributes();
 		const ranges = rangesOfElements(tables);
 
-		return { type: 'table', ranges: ranges };
+		return ranges;
 	}
 
 	if (element.match('style')) {
 		const styles = getStyles();
 		const ranges = rangesOfElements(styles);
 
-		return { type: 'style', ranges: ranges };
+		return ranges;
 	}
 }
 
 function getDecorations(element) {
 	if (element.match('table'))
-		return { type: 'table', decoration: window.createTextEditorDecorationType({ backgroundColor: 'red' }) };
+		return [window.createTextEditorDecorationType(DECORATIONS.DANGER), getRanges(element)];
 	if (element.match('style'))
-		return {
-			type: 'style',
-			decoration: window.createTextEditorDecorationType({ backgroundColor: 'yellow' }),
-		};
+		return [window.createTextEditorDecorationType(DECORATIONS.WARNING), getRanges(element)];
 }
 
 function rangesOfElements(elements) {
@@ -33,6 +50,7 @@ function rangesOfElements(elements) {
 	let currentIndex = 0;
 
 	return elements.map((element) => {
+		console.log(element.length)
 		const elementIndex = code.indexOf(element, currentIndex);
 		currentIndex = elementIndex + element.length;
 
