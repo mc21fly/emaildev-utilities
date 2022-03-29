@@ -4,6 +4,7 @@ const workspace = vscode.workspace;
 
 function activate(context) {
 	var activeTextEditor = window.activeTextEditor;
+	var matches = {};
 	var configuration = workspace.getConfiguration('emaildev-utilities');
 
 	init(configuration);
