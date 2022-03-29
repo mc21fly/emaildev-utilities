@@ -25,21 +25,16 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:emaildev-utilities.helloWorld",
 		"onCommand:emaildev-utilities.toggleStyles",
 		"onCommand:emaildev-utilities.toggleTables",
 		"onCommand:emaildev-utilities.toggleImgs",
 		"onCommand:emaildev-utilities.enable",
+		"onCommand:emaildev-utilities.replaceLh",
 		"*"
 	],
 	"main": "./extension.js",
 	"contributes": {
 		"commands": [
-			{
-				"command": "emaildev-utilities.helloWorld",
-				"category": "EDU",
-				"title": "Hello World"
-			},
 			{
 				"command": "emaildev-utilities.toggleStyles",
 				"category": "EDU",
@@ -59,6 +54,11 @@
 				"command": "emaildev-utilities.enable",
 				"category": "EDU",
 				"title": "Enable extension"
+			},
+			{
+				"command": "emaildev-utilities.replaceLh",
+				"category": "EDU",
+				"title": "Replace line-height in px"
 			}
 		],
 		"viewsContainers": {

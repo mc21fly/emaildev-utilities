@@ -11,12 +11,6 @@ function activate(context) {
 	init(configuration);
 
 	context.subscriptions.push(
-		vscode.commands.registerCommand('emaildev-utilities.helloWorld', async () => {
-			console.log(configuration);
-		})
-	);
-
-	context.subscriptions.push(
 		vscode.commands.registerCommand('emaildev-utilities.toggleTables', async () => {
 			configuration.update('isTablesEnabled', !configuration.get('isTablesEnabled'), true)
 		})
@@ -37,6 +31,26 @@ function activate(context) {
 	context.subscriptions.push(
 		vscode.commands.registerCommand('emaildev-utilities.enable', async () => {
 			configuration.update('isEnabled', !configuration.get('isEnabled'), true)
+		})
+	);
+
+	context.subscriptions.push(
+		vscode.commands.registerCommand('emaildev-utilities.replaceLh', async () => {
+			const document = activeTextEditor.document;
+			const edit = new vscode.WorkspaceEdit();
+
+			const stylesRanges = utils.searchForStyles(activeTextEditor);
+
+			stylesRanges.forEach(styleRange => {
+				const startIndex = document.offsetAt(styleRange._start);
+				const endIndex = document.offsetAt(styleRange._end);
+				const style = document.getText().slice(startIndex, endIndex);
+				const computedStyle = utils.replaceValues(style);
+
+				edit.replace(document.uri, styleRange, computedStyle)
+			})
+
+			workspace.applyEdit(edit);
 		})
 	);
 
