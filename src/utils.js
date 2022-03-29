@@ -1,17 +1,22 @@
 const vscode = require('vscode')
 
-function changeLineHeightValues(style) {
+function replaceValues(style) {
 	const lineHeight = style.match(/line-height:\s*\d+px;/gm);
 	const fontSize = style.match(/font-size:\s*\d+px;/gm);
-	const lineHeightValue = lineHeight[0].match(/\d+/);
-	const fontSizeValue = fontSize[0].match(/\d+/);
+	const lineHeightValue = parseInt(lineHeight[0].match(/\d+/));
+	const fontSizeValue = parseInt(fontSize[0].match(/\d+/));
 
-	const valueUnitless = (lineHeightValue / fontSizeValue).toFixed(2);
-	const valuePercent = (valueUnitless - 1) / 2 * 100 + 100;
+	if (lineHeightValue !== 0 && fontSizeValue !== 0) {
+		const valueUnitless = (lineHeightValue / fontSizeValue).toFixed(2);
+		const valuePercent = (valueUnitless - 1) / 2 * 100 + 100;
 
-	const replacedStyle = style.replace(/line-height:\s*\d+px;/gm, `line-height: ${valuePercent}%; line-height: ${valueUnitless}!important;`);
+		const replacedStyle = style.replace(/line-height:\s*\d+px;/gm, `line-height: ${valuePercent}%; line-height: ${valueUnitless}!important;`);
 
-	return replacedStyle;
+		return replacedStyle;
+	}
+
+	return style;
+
 }
 
 function searchForTables(activeTextEditor) {
@@ -60,5 +65,6 @@ function getRanges(activeTextEditor, elements) {
 module.exports = {
 	searchForTables,
 	searchForStyles,
-	searchForImgs
+	searchForImgs,
+	replaceValues
 };
