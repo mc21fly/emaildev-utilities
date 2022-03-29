@@ -25,7 +25,6 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:emaildev-utilities.helloWorld",
 		"onCommand:emaildev-utilities.toggleStyles",
 		"onCommand:emaildev-utilities.toggleTables",
 		"onCommand:emaildev-utilities.toggleImgs",
@@ -36,11 +35,6 @@
 	"main": "./extension.js",
 	"contributes": {
 		"commands": [
-			{
-				"command": "emaildev-utilities.helloWorld",
-				"category": "EDU",
-				"title": "Hello World"
-			},
 			{
 				"command": "emaildev-utilities.toggleStyles",
 				"category": "EDU",
