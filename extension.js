@@ -1,10 +1,11 @@
+const utils = require('./src/utils');
 const vscode = require('vscode');
 const window = vscode.window;
 const workspace = vscode.workspace;
 
 function activate(context) {
 	var activeTextEditor = window.activeTextEditor;
-	var matches = {};
+	var matches = [];
 	var configuration = workspace.getConfiguration('emaildev-utilities');
 
 	init(configuration);
@@ -38,23 +39,51 @@ function activate(context) {
 		activeTextEditor = editor;
 
 		if (editor) update();
-	});
+	}, null, context.subscriptions);
 
 	vscode.workspace.onDidChangeConfiguration(() => {
 		// Activate when configuration is changed;
 		configuration = workspace.getConfiguration('emaildev-utilities');
 
 		init(configuration);
-	});
+		update();
+	}, null, context.subscriptions);
+
+	workspace.onDidChangeTextDocument(function (event) {
+		if (activeTextEditor && event.document === activeTextEditor.document) {
+			configuration = workspace.getConfiguration('emaildev-utilities');
+			init(configuration)
+			update();
+		}
+	}, null, context.subscriptions);
+
+	if (activeTextEditor) update();
 
 	function init(configuration) {
 		var trackTables = configuration.get('isTablesEnabled');
 		var trackStyles = configuration.get('isStylesEnabled');
 		var tablesTrackColor = configuration.get('tablesTrackColor');
 		var stylesTrackColor = configuration.get('stylesTrackColor');
+
+		if (matches.length > 0) {
+			matches.forEach(match => {
+				match.type.dispose();
+			})
+		}
+
+		var initialDecorations = [];
+
+		if (trackTables) initialDecorations.push({ type: window.createTextEditorDecorationType(tablesTrackColor), ranges: utils.searchForTables(activeTextEditor) });
+		if (trackStyles) initialDecorations.push({ type: window.createTextEditorDecorationType(stylesTrackColor), ranges: utils.searchForStyles(activeTextEditor) });
+
+		matches = initialDecorations;
 	}
 
-	function update() {}
+	function update() {
+		matches.forEach(match => {
+			activeTextEditor.setDecorations(match.type, match.ranges)
+		})
+	}
 }
 
 exports.activate = activate;

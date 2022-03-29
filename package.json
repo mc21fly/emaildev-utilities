@@ -57,9 +57,8 @@
 				"emaildev-utilities.tablesTrackColor": {
 					"type": "object",
 					"default": {
-						"backgroundColor": "rgba(255, 255, 0, 0.5)",
+						"backgroundColor": "rgba(255, 255, 0, 0.15)",
 						"border": "1px dotted rgba(255, 255, 0, 1)",
-						"color": "rgba(255, 255, 255, 1)",
 						"overviewRulerColor": "rgba(255, 255,0, 0.5)"
 					},
 					"description": "Customize Warning Track colors"
@@ -67,9 +66,8 @@
 				"emaildev-utilities.stylesTrackColor": {
 					"type": "object",
 					"default": {
-						"backgroundColor": "rgba(255, 0, 0, 0.5)",
+						"backgroundColor": "rgba(255, 0, 0, 0.15)",
 						"border": "1px dotted rgba(255, 0, 0, 1)",
-						"color": "rgba(255, 255, 255, 1)",
 						"overviewRulerColor": "rgba(255, 0,0, 0.5)"
 					},
 					"description": "Customize Danger Track colors"
