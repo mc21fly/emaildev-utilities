@@ -13,6 +13,7 @@
 		"onCommand:emaildev-utilities.helloWorld",
 		"onCommand:emaildev-utilities.toggleStyles",
 		"onCommand:emaildev-utilities.toggleTables",
+		"onCommand:emaildev-utilities.toggleImgs",
 		"*"
 	],
 	"main": "./extension.js",
@@ -32,6 +33,11 @@
 				"command": "emaildev-utilities.toggleTables",
 				"category": "EDU",
 				"title": "Highlight tables without needed attributes"
+			},
+			{
+				"command": "emaildev-utilities.toggleImgs",
+				"category": "EDU",
+				"title": "Highlight imgs without alt tags"
 			}
 		],
 		"viewsContainers": {
@@ -61,7 +67,7 @@
 						"border": "1px dotted rgba(255, 255, 0, 1)",
 						"overviewRulerColor": "rgba(255, 255,0, 0.5)"
 					},
-					"description": "Customize Warning Track colors"
+					"description": "Customize TABLES Track colors"
 				},
 				"emaildev-utilities.stylesTrackColor": {
 					"type": "object",
@@ -70,7 +76,16 @@
 						"border": "1px dotted rgba(255, 0, 0, 1)",
 						"overviewRulerColor": "rgba(255, 0,0, 0.5)"
 					},
-					"description": "Customize Danger Track colors"
+					"description": "Customize STYLES Track colors"
+				},
+				"emaildev-utilities.imgsTrackColor": {
+					"type": "object",
+					"default": {
+						"backgroundColor": "rgba(0, 0, 255, 0.15)",
+						"border": "1px dotted rgba(0, 0, 255, 1)",
+						"overviewRulerColor": "rgba(0, 0, 255, 0.5)"
+					},
+					"description": "Customize IMG Track colors"
 				},
 				"emaildev-utilities.isTablesEnabled": {
 					"type": "boolean",
@@ -81,6 +96,11 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Enable tracking styles"
+				},
+				"emaildev-utilities.isImgsEnabled": {
+					"type": "boolean",
+					"default": true,
+					"description": "Enable tracking imgs"
 				}
 			}
 		}

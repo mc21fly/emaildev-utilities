@@ -32,6 +32,16 @@ function searchForStyles(activeTextEditor) {
 	return stylesRanges;
 }
 
+function searchForImgs(activeTextEditor) {
+	const code = activeTextEditor.document.getText();
+	const allImgs = code.match(/<img[^>]*[^>]*>/gm) || [];
+	const imgWithAlt = code.match(/<img[^>]*(?=alt="\s*.+\s*")[^>]*>/gm) || [];
+	const imgWithoutAlt = allImgs.filter(img => !imgWithAlt.includes(img));
+	const imgRanges = getRanges(activeTextEditor, imgWithoutAlt);
+
+	return imgRanges;
+}
+
 function getRanges(activeTextEditor, elements) {
 	let currentIndex = 0;
 	const code = activeTextEditor.document.getText();
@@ -50,4 +60,5 @@ function getRanges(activeTextEditor, elements) {
 module.exports = {
 	searchForTables,
 	searchForStyles,
+	searchForImgs
 };
