@@ -11,9 +11,8 @@
 	],
 	"activationEvents": [
 		"onCommand:emaildev-utilities.helloWorld",
-		"onCommand:emaildev-utilities.highlightStyles",
-		"onCommand:emaildev-utilities.highlightTables",
-		"onCommand:emaildev-utilities.untrack",
+		"onCommand:emaildev-utilities.toggleStyles",
+		"onCommand:emaildev-utilities.toggleTables",
 		"*"
 	],
 	"main": "./extension.js",
@@ -25,19 +24,14 @@
 				"title": "Hello World"
 			},
 			{
-				"command": "emaildev-utilities.highlightStyles",
+				"command": "emaildev-utilities.toggleStyles",
 				"category": "EDU",
 				"title": "Highlight styles with font-size and line-height"
 			},
 			{
-				"command": "emaildev-utilities.highlightTables",
+				"command": "emaildev-utilities.toggleTables",
 				"category": "EDU",
 				"title": "Highlight tables without needed attributes"
-			},
-			{
-				"command": "emaildev-utilities.untrack",
-				"category": "EDU",
-				"title": "Untrack"
 			}
 		],
 		"viewsContainers": {
@@ -60,7 +54,7 @@
 		"configuration": {
 			"title": "EmailDev Utilities",
 			"properties": {
-				"emaildev-utilities.warningColor": {
+				"emaildev-utilities.tablesTrackColor": {
 					"type": "object",
 					"default": {
 						"backgroundColor": "rgba(255, 255, 0, 0.5)",
@@ -70,7 +64,7 @@
 					},
 					"description": "Customize Warning Track colors"
 				},
-				"emaildev-utilities.dangerColor": {
+				"emaildev-utilities.stylesTrackColor": {
 					"type": "object",
 					"default": {
 						"backgroundColor": "rgba(255, 0, 0, 0.5)",
@@ -80,10 +74,15 @@
 					},
 					"description": "Customize Danger Track colors"
 				},
-				"emaildev-utilities.isEnabled": {
+				"emaildev-utilities.isTablesEnabled": {
 					"type": "boolean",
 					"default": true,
-					"description": "Enable extension"
+					"description": "Enable tracking tables"
+				},
+				"emaildev-utilities.isStylesEnabled": {
+					"type": "boolean",
+					"default": true,
+					"description": "Enable tracking styles"
 				}
 			}
 		}
