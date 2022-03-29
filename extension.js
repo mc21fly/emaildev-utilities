@@ -18,40 +18,40 @@ function activate(context) {
 
 	context.subscriptions.push(
 		vscode.commands.registerCommand('emaildev-utilities.toggleTables', async () => {
-			// Toggle tables highlight
-			configuration.update('isTablesEnabled', !configuration.get('isTablesEnabled'), true).then(() => {
-				//
-			});
+			configuration.update('isTablesEnabled', !configuration.get('isTablesEnabled'), true)
 		})
 	);
 
 	context.subscriptions.push(
 		vscode.commands.registerCommand('emaildev-utilities.toggleStyles', async () => {
-			// Toggle styles highlight
-			configuration.update('isStylesEnabled', !configuration.get('isStylesEnabled'), true).then(() => {
-				//
-			});
+			configuration.update('isStylesEnabled', !configuration.get('isStylesEnabled'), true)
 		})
 	);
 
 	context.subscriptions.push(
 		vscode.commands.registerCommand('emaildev-utilities.toggleImgs', async () => {
-			// Toggle tables highlight
-			configuration.update('isImgsEnabled', !configuration.get('isImgsEnabled'), true).then(() => {
-				//
-			});
+			configuration.update('isImgsEnabled', !configuration.get('isImgsEnabled'), true)
+		})
+	);
+
+	context.subscriptions.push(
+		vscode.commands.registerCommand('emaildev-utilities.enable', async () => {
+			configuration.update('isEnabled', !configuration.get('isEnabled'), true)
 		})
 	);
 
 	vscode.window.onDidChangeActiveTextEditor((editor) => {
-		// Activate when TextEditor change;
 		activeTextEditor = editor;
 
-		if (editor) update();
+		if (editor) {
+			configuration = workspace.getConfiguration('emaildev-utilities');
+
+			init(configuration);
+			update();
+		}
 	}, null, context.subscriptions);
 
 	vscode.workspace.onDidChangeConfiguration(() => {
-		// Activate when configuration is changed;
 		configuration = workspace.getConfiguration('emaildev-utilities');
 
 		init(configuration);
@@ -69,6 +69,7 @@ function activate(context) {
 	if (activeTextEditor) update();
 
 	function init(configuration) {
+		var isEnable = configuration.get('isEnabled');
 		var trackTables = configuration.get('isTablesEnabled');
 		var trackStyles = configuration.get('isStylesEnabled');
 		var trackImgs = configuration.get('isImgsEnabled');
@@ -84,9 +85,9 @@ function activate(context) {
 
 		var initialDecorations = [];
 
-		if (trackTables) initialDecorations.push({ type: window.createTextEditorDecorationType(tablesTrackColor), ranges: utils.searchForTables(activeTextEditor) });
-		if (trackStyles) initialDecorations.push({ type: window.createTextEditorDecorationType(stylesTrackColor), ranges: utils.searchForStyles(activeTextEditor) });
-		if (trackImgs) initialDecorations.push({ type: window.createTextEditorDecorationType(imgsTrackColor), ranges: utils.searchForImgs(activeTextEditor) });
+		if (isEnable && trackTables) initialDecorations.push({ type: window.createTextEditorDecorationType(tablesTrackColor), ranges: utils.searchForTables(activeTextEditor) });
+		if (isEnable && trackStyles) initialDecorations.push({ type: window.createTextEditorDecorationType(stylesTrackColor), ranges: utils.searchForStyles(activeTextEditor) });
+		if (isEnable && trackImgs) initialDecorations.push({ type: window.createTextEditorDecorationType(imgsTrackColor), ranges: utils.searchForImgs(activeTextEditor) });
 
 		matches = initialDecorations;
 	}

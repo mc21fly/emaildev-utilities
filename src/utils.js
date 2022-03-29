@@ -1,6 +1,6 @@
 const vscode = require('vscode')
 
-function changeLineHeightValues(style) {
+function replaceLineHeight(style) {
 	const lineHeight = style.match(/line-height:\s*\d+px;/gm);
 	const fontSize = style.match(/font-size:\s*\d+px;/gm);
 	const lineHeightValue = lineHeight[0].match(/\d+/);
@@ -35,7 +35,7 @@ function searchForStyles(activeTextEditor) {
 function searchForImgs(activeTextEditor) {
 	const code = activeTextEditor.document.getText();
 	const allImgs = code.match(/<img[^>]*[^>]*>/gm) || [];
-	const imgWithAlt = code.match(/<img[^>]*(?=alt="\s*.+\s*")[^>]*>/gm) || [];
+	const imgWithAlt = code.match(/<img[^>]*alt="\s*([^"]+)\s*"[^>]*>/gm) || [];
 	const imgWithoutAlt = allImgs.filter(img => !imgWithAlt.includes(img));
 	const imgRanges = getRanges(activeTextEditor, imgWithoutAlt);
 

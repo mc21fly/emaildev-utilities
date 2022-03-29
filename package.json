@@ -14,6 +14,7 @@
 		"onCommand:emaildev-utilities.toggleStyles",
 		"onCommand:emaildev-utilities.toggleTables",
 		"onCommand:emaildev-utilities.toggleImgs",
+		"onCommand:emaildev-utilities.enable",
 		"*"
 	],
 	"main": "./extension.js",
@@ -38,6 +39,11 @@
 				"command": "emaildev-utilities.toggleImgs",
 				"category": "EDU",
 				"title": "Highlight imgs without alt tags"
+			},
+			{
+				"command": "emaildev-utilities.enable",
+				"category": "EDU",
+				"title": "Enable extension"
 			}
 		],
 		"viewsContainers": {
@@ -101,6 +107,11 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Enable tracking imgs"
+				},
+				"emaildev-utilities.isEnabled": {
+					"type": "boolean",
+					"default": true,
+					"description": "Enable extenstion"
 				}
 			}
 		}
