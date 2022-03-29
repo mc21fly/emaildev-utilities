@@ -16,7 +16,6 @@ function replaceValues(style) {
 	}
 
 	return style;
-
 }
 
 function searchForTables(activeTextEditor) {

@@ -2,7 +2,7 @@
 	"name": "emaildev-utilities",
 	"displayName": "EmailDev Utilities",
 	"description": "Few utilities that helps you do email development.",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"keywords": [
 		"email",
 		"development",
