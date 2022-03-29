@@ -2,9 +2,24 @@
 	"name": "emaildev-utilities",
 	"displayName": "EmailDev Utilities",
 	"description": "Few utilities that helps you do email development.",
-	"version": "0.0.1",
+	"version": "1.0.0",
+	"keywords": [
+		"email",
+		"development",
+		"html",
+		"highlight",
+		"emaildev"
+	],
+	"publisher": "mc21fly",
+	"license": "MIT",
+	"icon": "assets/icon.png",
+	"homepage": "https://github.com/mc21fly/emaildev-utilities",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/mc21fly/emaildev-utilities"
+	},
 	"engines": {
-		"vscode": "^1.60.0"
+		"vscode": "^1.65.0"
 	},
 	"categories": [
 		"Other"
