@@ -26,7 +26,7 @@ function replaceValues(exceptions, style) {
 function searchForTables(activeTextEditor) {
 	const code = activeTextEditor.document.getText();
 	const allTables = code.match(/<table[^>]*>/gm) || [];
-	const tablesWithAttributes = code.match(/<table[^>]*(?=[^>]*?role="presentation")[^>]*(?=[^>]*?border="0")[^>]*(?=[^>]*?cellpadding="0")[^>]*(?=[^>]*?cellspacing="0")[^>]*>/gm) || [];
+	const tablesWithAttributes = code.match(/<table[^>]*?(?=[^>]*?role="presentation")[^>]*?(?=[^>]*?border="0")[^>]*?(?=[^>]*?cellpadding="0")[^>]*?(?=[^>]*?cellspacing="0")[^>]*?>/gm) || [];
 	const tablesWithoutAttributes = allTables.filter((table) => !tablesWithAttributes.includes(table));
 	const tablesRanges = getRanges(activeTextEditor, tablesWithoutAttributes);
 
@@ -35,7 +35,7 @@ function searchForTables(activeTextEditor) {
 
 function searchForStyles(activeTextEditor) {
 	const code = activeTextEditor.document.getText();
-	const styles = code.match(/style="[^"]*(?=.*?font-size:[^\d]*\d+px)[^"]*(?=.*?line-height:[^\d]*\d+px)[^"]*"/gm) || [];
+	const styles = code.match(/style="[^"]*?(?=[^f]*?font-size:[^\d]*?\d+px)(?=[^l]*?line-height:[^\d]*?\d+px)[^"]*?"/gm) || [];
 	const stylesRanges = getRanges(activeTextEditor, styles);
 
 	return stylesRanges;
@@ -43,8 +43,8 @@ function searchForStyles(activeTextEditor) {
 
 function searchForImgs(activeTextEditor) {
 	const code = activeTextEditor.document.getText();
-	const allImgs = code.match(/<img[^>]*[^>]*>/gm) || [];
-	const imgWithAlt = code.match(/<img[^>]*alt="\s*([^"]+)\s*"[^>]*>/gm) || [];
+	const allImgs = code.match(/<img[^>]*?>/gm) || [];
+	const imgWithAlt = code.match(/<img[^>]*alt="\s*?([^"]+)\s*?"[^>]*>/gm) || [];
 	const imgWithoutAlt = allImgs.filter(img => !imgWithAlt.includes(img));
 	const imgRanges = getRanges(activeTextEditor, imgWithoutAlt);
 
