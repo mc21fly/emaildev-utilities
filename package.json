@@ -61,23 +61,6 @@
 				"title": "Replace line-height in px"
 			}
 		],
-		"viewsContainers": {
-			"activitybar": [
-				{
-					"id": "emaildev-utilities-explorer",
-					"title": "EmailDev Utilities",
-					"icon": "src/media/icon.svg"
-				}
-			]
-		},
-		"views": {
-			"emaildev-utilities-explorer": [
-				{
-					"id": "emaildev-utilities-view",
-					"name": "Tools"
-				}
-			]
-		},
 		"configuration": {
 			"title": "EmailDev Utilities",
 			"properties": {
