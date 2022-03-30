@@ -127,6 +127,17 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Enable extenstion"
+				},
+				"emaildev-utilities.exceptions": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					},
+					"default": [
+						"0, 0",
+						"18, 48"
+					],
+					"markdownDescription": "Exceptions for replacing line-height and highlighting styles. To add new please follow rule: `font-size px, line-height px`"
 				}
 			}
 		}

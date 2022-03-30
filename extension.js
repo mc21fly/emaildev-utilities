@@ -38,6 +38,7 @@ function activate(context) {
 		vscode.commands.registerCommand('emaildev-utilities.replaceLh', async () => {
 			const document = activeTextEditor.document;
 			const edit = new vscode.WorkspaceEdit();
+			const exceptions = configuration.get('exceptions')
 
 			const stylesRanges = utils.searchForStyles(activeTextEditor);
 
@@ -45,7 +46,7 @@ function activate(context) {
 				const startIndex = document.offsetAt(styleRange._start);
 				const endIndex = document.offsetAt(styleRange._end);
 				const style = document.getText().slice(startIndex, endIndex);
-				const computedStyle = utils.replaceValues(style);
+				const computedStyle = utils.replaceValues(exceptions, style);
 
 				edit.replace(document.uri, styleRange, computedStyle)
 			})
@@ -99,9 +100,11 @@ function activate(context) {
 
 		var initialDecorations = [];
 
-		if (isEnable && trackTables) initialDecorations.push({ type: window.createTextEditorDecorationType(tablesTrackColor), ranges: utils.searchForTables(activeTextEditor) });
-		if (isEnable && trackStyles) initialDecorations.push({ type: window.createTextEditorDecorationType(stylesTrackColor), ranges: utils.searchForStyles(activeTextEditor) });
-		if (isEnable && trackImgs) initialDecorations.push({ type: window.createTextEditorDecorationType(imgsTrackColor), ranges: utils.searchForImgs(activeTextEditor) });
+		if (activeTextEditor) {
+			if (isEnable && trackTables) initialDecorations.push({ type: window.createTextEditorDecorationType(tablesTrackColor), ranges: utils.searchForTables(activeTextEditor) });
+			if (isEnable && trackStyles) initialDecorations.push({ type: window.createTextEditorDecorationType(stylesTrackColor), ranges: utils.searchForStyles(activeTextEditor) });
+			if (isEnable && trackImgs) initialDecorations.push({ type: window.createTextEditorDecorationType(imgsTrackColor), ranges: utils.searchForImgs(activeTextEditor) });
+		}
 
 		matches = initialDecorations;
 	}

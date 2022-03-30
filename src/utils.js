@@ -1,14 +1,19 @@
 const vscode = require('vscode')
 
-function replaceValues(style) {
+function isExcepted(exceptions, value) {
+	return exceptions.includes(value)
+}
+
+function replaceValues(exceptions, style) {
 	const lineHeight = style.match(/line-height:\s*\d+px;/gm);
 	const fontSize = style.match(/font-size:\s*\d+px;/gm);
 	const lineHeightValue = parseInt(lineHeight[0].match(/\d+/));
 	const fontSizeValue = parseInt(fontSize[0].match(/\d+/));
+	const value = `${fontSizeValue}, ${lineHeightValue}`;
 
-	if (lineHeightValue !== 0 && fontSizeValue !== 0) {
-		const valueUnitless = (lineHeightValue / fontSizeValue).toFixed(2);
-		const valuePercent = (valueUnitless - 1) / 2 * 100 + 100;
+	if (!isExcepted(exceptions, value)) {
+		const valueUnitless = parseFloat((lineHeightValue / fontSizeValue).toFixed(2));
+		const valuePercent = parseInt((valueUnitless - 1) / 2 * 100 + 100);
 
 		const replacedStyle = style.replace(/line-height:\s*\d+px;/gm, `line-height: ${valuePercent}%; line-height: ${valueUnitless}!important;`);
 
@@ -65,5 +70,5 @@ module.exports = {
 	searchForTables,
 	searchForStyles,
 	searchForImgs,
-	replaceValues
+	replaceValues,
 };
