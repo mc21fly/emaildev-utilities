@@ -12,7 +12,7 @@ function activate(context) {
 
 	context.subscriptions.push(
 		vscode.commands.registerCommand('emaildev-utilities.toggleTables', async () => {
-			configuration.update('isTablesEnabled', !configuration.get('isTablesEnabled'), true)
+			configuration.update('isTablesEnabled', !configuration.get('isTablesEnabled'), true);
 		})
 	);
 
@@ -100,7 +100,7 @@ function activate(context) {
 
 		var initialDecorations = [];
 
-		if (activeTextEditor) {
+		if (activeTextEditor && activeTextEditor.document.languageId === 'html') {
 			if (isEnable && trackTables) initialDecorations.push({ type: window.createTextEditorDecorationType(tablesTrackColor), ranges: utils.searchForTables(activeTextEditor) });
 			if (isEnable && trackStyles) initialDecorations.push({ type: window.createTextEditorDecorationType(stylesTrackColor), ranges: utils.searchForStyles(activeTextEditor) });
 			if (isEnable && trackImgs) initialDecorations.push({ type: window.createTextEditorDecorationType(imgsTrackColor), ranges: utils.searchForImgs(activeTextEditor) });

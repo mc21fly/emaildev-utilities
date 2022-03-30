@@ -24,6 +24,10 @@ There is no known issues.
 
 ## Release Notes
 
+### 1.0.3
+
+- Tracking only available in `html` files
+
 ### 1.0.2
 - Exceptions added
 
