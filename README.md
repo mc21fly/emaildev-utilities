@@ -9,7 +9,7 @@ Simple extension that will help you to track some elements in your code, that ar
 - Tracking `<img>` elements without `alt` tag (also with empty string e.g. `alt=""`)
 - Replacing `line-height` given in px, to be unitless and in percentage.
 - Adding exception for styles replacement.
-- Wraping selection into `<span style="white-space: nowrap>selection</span>`. If selection contains whitespaces, they will be changed for `&nbsp;` e.g. `Lorem ipsum dolor sit` will be changed into `<span style="white-space: nowrap>Lorem&nbsp;ipsum</span>`
+- Wraping selection into `<span style="white-space: nowrap>selection</span>`. If selection contains whitespaces, they will be changed for `&nbsp;` e.g. `Lorem ipsum dolor sit` will be changed into `<span style="white-space: nowrap>Lorem&nbsp;ipsum&nbsp;dolor&nbsp;sit</span>`
 
 ## Commands
 
