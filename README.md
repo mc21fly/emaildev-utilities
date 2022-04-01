@@ -29,6 +29,10 @@ There is no known issues.
 
 ## Release Notes
 
+### 1.1.1
+
+- `Wrap selection` bug fixed.
+
 ### 1.1.0
 
 - `Wrap selection` function added.

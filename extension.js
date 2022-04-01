@@ -18,7 +18,7 @@ function activate(context) {
 
 				const words = document.getText(selection);
 				const withWhiteSpace = words.replaceAll(' ', '&nbsp;');
-				const wrapped = `<span style="white-space: nowrap">${withWhiteSpace}</span>`;
+				const wrapped = `<span style="white-space:nowrap;">${withWhiteSpace}</span>`;
 
 				activeTextEditor.edit((editBuilder) => {
 					editBuilder.replace(selection, wrapped);
