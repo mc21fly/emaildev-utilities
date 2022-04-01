@@ -19,6 +19,9 @@ Simple extension that will help you to track some elements in your code, that ar
 - `EDU: Enable extension`: turn on/off extenstion
 - `EDU: Replace line-height in px`: convert `line-height` in px to be unitless and in percentage.
 - `EDU: Wrap selection`: wrap selection with `<span style="white-space: nowrap">`_SELECTION_`</span>`
+  - Default keybinding:
+    - Win: `CTRL+W S`
+    - Mac: `CMD+W S`
 
 ## Known Issues
 
