@@ -11,7 +11,7 @@ function activate(context) {
 	init(configuration);
 
 	context.subscriptions.push(
-		vscode.commands.registerCommand('emaildev-utilities.wrapSelection', async () => {
+		vscode.commands.registerCommand('emaildev-utilities.spanSelection', async () => {
 			if (activeTextEditor) {
 				const document = activeTextEditor.document;
 				const selection = activeTextEditor.selection;
@@ -19,6 +19,22 @@ function activate(context) {
 				const words = document.getText(selection);
 				const withWhiteSpace = words.replaceAll(' ', '&nbsp;');
 				const wrapped = `<span style="white-space:nowrap;">${withWhiteSpace}</span>`;
+
+				activeTextEditor.edit((editBuilder) => {
+					editBuilder.replace(selection, wrapped);
+				});
+			}
+		})
+	);
+
+	context.subscriptions.push(
+		vscode.commands.registerCommand('emaildev-utilities.supSelection', async () => {
+			if (activeTextEditor) {
+				const document = activeTextEditor.document;
+				const selection = activeTextEditor.selection;
+
+				const word = document.getText(selection);
+				const wrapped = `<sup style="line-height:100%;">${word}</sup>`;
 
 				activeTextEditor.edit((editBuilder) => {
 					editBuilder.replace(selection, wrapped);

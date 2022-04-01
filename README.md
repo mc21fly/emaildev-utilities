@@ -1,5 +1,3 @@
-s# emaildev-utilities README
-
 Simple extension that will help you to track some elements in your code, that are not allowed in email development.
 
 ## Features
@@ -7,9 +5,9 @@ Simple extension that will help you to track some elements in your code, that ar
 - Tracking `<table>` elements without `role="presentation"`, `border="0"`, `cellpadding="0"` and `cellspacing="0"`
 - Tracking `style` attributes where are `font-size` and `line-height` given in `px`
 - Tracking `<img>` elements without `alt` tag (also with empty string e.g. `alt=""`)
-- Replacing `line-height` given in px, to be unitless and in percentage.
-- Adding exception for styles replacement.
-- Wraping selection into `<span style="white-space: nowrap>selection</span>`. If selection contains whitespaces, they will be changed for `&nbsp;` e.g. `Lorem ipsum dolor sit` will be changed into `<span style="white-space: nowrap>Lorem&nbsp;ipsum&nbsp;dolor&nbsp;sit</span>`
+- Replacing `line-height` given in px, to be unitless and in percentage excluding exceptations.
+- Wraping selection into `<span style="white-space:nowrap;">selection</span>`. If selection contains whitespaces, they will be changed for `&nbsp;` e.g. `Lorem ipsum dolor sit` will be changed into `<span style="white-space: nowrap;">Lorem&nbsp;ipsum&nbsp;dolor&nbsp;sit</span>`
+- Wraping selection into `<sup style="line-height:100%;">selection</sup>`.
 
 ## Commands
 
@@ -17,17 +15,31 @@ Simple extension that will help you to track some elements in your code, that ar
 - `EDU: Highlight tables without needed attributes`: turn on/off the tables highlight
 - `EDU: Highlight imgs without alt tags`: turn on/off the imgs highlight
 - `EDU: Enable extension`: turn on/off extenstion
-- `EDU: Replace line-height in px`: convert `line-height` in px to be unitless and in percentage.
-- `EDU: Wrap selection`: wrap selection with `<span style="white-space: nowrap">`_SELECTION_`</span>`
+- `EDU: Replace line-height in px`: convert `line-height` in px to be unitless and in percentage excluding exceptations.
+- `EDU: Wrap selection with <span>`: wrap selection with `<span style="white-space:nowrap;">`_SELECTION_`</span>`
   - Default keybinding:
-    - Win: `CTRL+W S`
-    - Mac: `CMD+W S`
+    - Win: `CTRL+W`
+    - Mac: `CMD+W`
+
+- `EDU: Wrap selection with <sup>`: wrap selection with `<sup style="line-height:100%;">`_SELECTION_`</sup>`
+  - Default keybinding:
+    - Win: `CTRL+E`
+    - Mac: `CMD+E`
 
 ## Known Issues
 
 There is no known issues.
 
 ## Release Notes
+
+### 1.2.0
+
+- `Wrap selection with <sup>` function added.
+- `Wrap selection` renamed to `Wrap selection with <span>`.
+
+### 1.1.2
+
+- `Wrap selection` command keybinding changed to be `CTRL+W`, `CMD+W`
 
 ### 1.1.1
 

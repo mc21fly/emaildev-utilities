@@ -2,7 +2,7 @@
 	"name": "emaildev-utilities",
 	"displayName": "EmailDev Utilities",
 	"description": "Few utilities that helps you do email development.",
-	"version": "1.1.1",
+	"version": "1.2.0",
 	"keywords": [
 		"email",
 		"development",
@@ -30,7 +30,8 @@
 		"onCommand:emaildev-utilities.toggleImgs",
 		"onCommand:emaildev-utilities.enable",
 		"onCommand:emaildev-utilities.replaceLh",
-		"onCommand:emaildev-utilities.wrapSelection",
+		"onCommand:emaildev-utilities.spanSelection",
+		"onCommand:emaildev-utilities.supSelection",
 		"*"
 	],
 	"main": "./extension.js",
@@ -62,16 +63,26 @@
 				"title": "Replace line-height in px"
 			},
 			{
-				"command": "emaildev-utilities.wrapSelection",
+				"command": "emaildev-utilities.spanSelection",
 				"category": "EDU",
-				"title": "Wrap selection"
+				"title": "Wrap selection with <span>"
+			},
+			{
+				"command": "emaildev-utilities.supSelection",
+				"category": "EDU",
+				"title": "Wrap selection with <sup>"
 			}
 		],
 		"keybindings": [
 			{
-				"command": "emaildev-utilities.wrapSelection",
-				"key": "ctrl+w s",
-				"mac": "cmd+w s"
+				"command": "emaildev-utilities.spanSelection",
+				"key": "ctrl+w",
+				"mac": "cmd+w"
+			},
+			{
+				"command": "emaildev-utilities.supSelection",
+				"key": "ctrl+e",
+				"mac": "cmd+e"
 			}
 		],
 		"configuration": {
