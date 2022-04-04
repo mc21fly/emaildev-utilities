@@ -20,13 +20,13 @@ Simple extension that will help you to track some elements in your code, that ar
 - `EDU: Replace line-height in px`: convert `line-height` in px to be unitless and in percentage excluding exceptations.
 - `EDU: Wrap selection with <span>`: wrap selection with `<span style="white-space:nowrap;">`_SELECTION_`</span>`
   - Default keybinding:
-    - Win: `CTRL+W`
-    - Mac: `CMD+W`
+    - Win: `CTRL`+`W`
+    - Mac: `CMD`+`W`
 
 - `EDU: Wrap selection with <sup>`: wrap selection with `<sup style="line-height:100%;">`_SELECTION_`</sup>`
   - Default keybinding:
-    - Win: `CTRL+E`
-    - Mac: `CMD+E`
+    - Win: `CTRL`+`E`
+    - Mac: `CMD`+`E`
 
 ## Known Issues
 
