@@ -41,6 +41,14 @@ function searchForStyles(activeTextEditor) {
 	return stylesRanges;
 }
 
+function searchForAlts(activeTextEditor) {
+	const code = activeTextEditor.document.getText();
+	const alts = code.match(/alt="[^"]*?"/gm) || [];
+	const altsRanges = getRanges(activeTextEditor, alts);
+
+	return altsRanges;
+}
+
 function searchForImgs(activeTextEditor) {
 	const code = activeTextEditor.document.getText();
 	const allImgs = code.match(/<img[^>]*?>/gm) || [];
@@ -71,4 +79,5 @@ module.exports = {
 	searchForStyles,
 	searchForImgs,
 	replaceValues,
+	searchForAlts
 };

@@ -68,6 +68,12 @@ function activate(context) {
 	);
 
 	context.subscriptions.push(
+		vscode.commands.registerCommand('emaildev-utilities.toggleAlts', async () => {
+			configuration.update('isAltEnabled', !configuration.get('isAltEnabled'), true);
+		})
+	);
+
+	context.subscriptions.push(
 		vscode.commands.registerCommand('emaildev-utilities.replaceLh', async () => {
 			const document = activeTextEditor.document;
 			const edit = new vscode.WorkspaceEdit();
@@ -133,9 +139,11 @@ function activate(context) {
 		var trackTables = configuration.get('isTablesEnabled');
 		var trackStyles = configuration.get('isStylesEnabled');
 		var trackImgs = configuration.get('isImgsEnabled');
+		var trackAlts = configuration.get('isAltEnabled');
 		var tablesTrackColor = configuration.get('tablesTrackColor');
 		var stylesTrackColor = configuration.get('stylesTrackColor');
 		var imgsTrackColor = configuration.get('imgsTrackColor');
+		var altsTrackColor = configuration.get('altsTrackColor')
 
 		if (matches.length > 0) {
 			matches.forEach((match) => {
@@ -161,6 +169,7 @@ function activate(context) {
 					type: window.createTextEditorDecorationType(imgsTrackColor),
 					ranges: utils.searchForImgs(activeTextEditor),
 				});
+			if (isEnable && trackAlts) initialDecorations.push({type: window.createTextEditorDecorationType(altsTrackColor), ranges: utils.searchForAlts(activeTextEditor)})
 		}
 
 		matches = initialDecorations;
