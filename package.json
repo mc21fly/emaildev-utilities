@@ -69,6 +69,11 @@
 				"command": "emaildev-utilities.toggleAlts",
 				"category": "EDU",
 				"title": "Highlight alt tags"
+			},
+			{
+				"command": "emaildev-utilities.hello",
+				"category": "EDU",
+				"title": "Hello"
 			}
 		],
 		"keybindings": [

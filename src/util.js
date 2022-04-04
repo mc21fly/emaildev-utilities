@@ -74,10 +74,15 @@ function getRanges(activeTextEditor, elements) {
 	});
 }
 
+function hello(ctx) {
+	console.log(ctx)
+}
+
 module.exports = {
 	searchForTables,
 	searchForStyles,
 	searchForImgs,
 	replaceValues,
-	searchForAlts
+	searchForAlts,
+	hello
 };
