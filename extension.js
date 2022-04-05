@@ -3,30 +3,42 @@
 const vscode = require('vscode');
 const window = vscode.window;
 const workspace = vscode.workspace;
+
 const CommandRegister = require('./src/CommandRegister');
 const ConfigurationRegister = require('./src/ConfigurationRegister');
-const { hello } = require('./src/util');
+const TextEditorRegister = require('./src/TextEditorRegister');
+
+const util = require('./src/util');
 
 function activate(context) {
 	const commands = new CommandRegister(context);
-	const configuration = new ConfigurationRegister();
+	const configuration = new ConfigurationRegister(workspace);
+	const textEditor = new TextEditorRegister(window);
+	const toggleCommands = ['extension', 'tables', 'styles', 'imgs', 'alts'];
 
-	commands.register('hello', () => console.log(configuration.get('isEnabled')))
+	commands.register('hello', () => {
+		console.log(textEditor);
+	});
 
+	toggleCommands.forEach((command) => {
+		const capitalized = command[0].toUpperCase() + command.substring(1);
+		commands.register(command, () => configuration.toggle(`is${capitalized}Enabled`));
+	});
 
-	window.onDidChangeActiveTextEditor(editor => {
-		//
-	})
+	window.onDidChangeActiveTextEditor((editor) => {
+		textEditor.setActiveTextEditor(editor);
+	});
 
 	workspace.onDidChangeConfiguration(() => {
-		//
-		configuration.setCurrentConfiguration(workspace.getConfiguration('emaildev-utilities'))
-		console.log(configuration)
-	})
+		configuration.setCurrentConfiguration(workspace);
+	});
 
-	workspace.onDidChangeTextDocument(event => {
-		//
-	})
-} 
+	workspace.onDidChangeTextDocument((event) => {
+		const activeTextEditor = textEditor.getActiveTextEditor();
+		if (activeTextEditor && event.document === activeTextEditor.document) {
+			console.log('Change text!');
+		}
+	});
+}
 
 exports.activate = activate;

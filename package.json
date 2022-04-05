@@ -31,22 +31,22 @@
 	"contributes": {
 		"commands": [
 			{
-				"command": "emaildev-utilities.toggleStyles",
+				"command": "emaildev-utilities.styles",
 				"category": "EDU",
 				"title": "Highlight styles with font-size and line-height"
 			},
 			{
-				"command": "emaildev-utilities.toggleTables",
+				"command": "emaildev-utilities.tables",
 				"category": "EDU",
 				"title": "Highlight tables without needed attributes"
 			},
 			{
-				"command": "emaildev-utilities.toggleImgs",
+				"command": "emaildev-utilities.imgs",
 				"category": "EDU",
 				"title": "Highlight imgs without alt tags"
 			},
 			{
-				"command": "emaildev-utilities.enable",
+				"command": "emaildev-utilities.extension",
 				"category": "EDU",
 				"title": "Enable extension"
 			},
@@ -66,7 +66,7 @@
 				"title": "Wrap selection with <sup>"
 			},
 			{
-				"command": "emaildev-utilities.toggleAlts",
+				"command": "emaildev-utilities.alts",
 				"category": "EDU",
 				"title": "Highlight alt tags"
 			},
@@ -142,7 +142,7 @@
 					"default": true,
 					"description": "Enable tracking imgs"
 				},
-				"emaildev-utilities.isEnabled": {
+				"emaildev-utilities.isExtensionEnabled": {
 					"type": "boolean",
 					"default": true,
 					"description": "Enable extenstion"
