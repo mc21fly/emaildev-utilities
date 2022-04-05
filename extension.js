@@ -6,6 +6,7 @@ const workspace = vscode.workspace;
 
 const CommandRegister = require('./src/CommandRegister');
 const ConfigurationRegister = require('./src/ConfigurationRegister');
+const DecorationRegister = require('./src/DecorationRegister');
 const TextEditorRegister = require('./src/TextEditorRegister');
 
 const util = require('./src/util');
@@ -14,31 +15,33 @@ function activate(context) {
 	const commands = new CommandRegister(context);
 	const configuration = new ConfigurationRegister(workspace);
 	const textEditor = new TextEditorRegister(window);
+	const decorations = new DecorationRegister();
 	const toggleCommands = ['extension', 'tables', 'styles', 'imgs', 'alts'];
 
 	commands.register('hello', () => {
-		console.log(textEditor);
+		console.log(textEditor.getActiveTextEditor());
 	});
 
-	toggleCommands.forEach((command) => {
-		const capitalized = command[0].toUpperCase() + command.substring(1);
-		commands.register(command, () => configuration.toggle(`is${capitalized}Enabled`));
-	});
+	commands.registerAll(toggleCommands, (command) => configuration.toggle(`is${command[0].toUpperCase() + command.substring(1)}Enabled`))
 
 	window.onDidChangeActiveTextEditor((editor) => {
 		textEditor.setActiveTextEditor(editor);
+		if (editor) decorations.update(configuration, textEditor)
 	});
 
 	workspace.onDidChangeConfiguration(() => {
 		configuration.setCurrentConfiguration(workspace);
+		decorations.update(configuration, textEditor)
 	});
 
 	workspace.onDidChangeTextDocument((event) => {
 		const activeTextEditor = textEditor.getActiveTextEditor();
 		if (activeTextEditor && event.document === activeTextEditor.document) {
-			console.log('Change text!');
+			decorations.update(configuration, textEditor)
 		}
 	});
+
+	if (textEditor.getActiveTextEditor()) decorations.update(configuration, textEditor);
 }
 
 exports.activate = activate;

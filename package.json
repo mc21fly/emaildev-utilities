@@ -91,7 +91,7 @@
 		"configuration": {
 			"title": "EmailDev Utilities",
 			"properties": {
-				"emaildev-utilities.tablesTrackColor": {
+				"emaildev-utilities.tablesDecoration": {
 					"type": "object",
 					"default": {
 						"backgroundColor": "rgba(255, 255, 0, 0.15)",
@@ -100,7 +100,7 @@
 					},
 					"description": "Customize TABLES Track colors"
 				},
-				"emaildev-utilities.stylesTrackColor": {
+				"emaildev-utilities.stylesDecoration": {
 					"type": "object",
 					"default": {
 						"backgroundColor": "rgba(255, 0, 0, 0.15)",
@@ -109,7 +109,7 @@
 					},
 					"description": "Customize STYLES Track colors"
 				},
-				"emaildev-utilities.altsTrackColor": {
+				"emaildev-utilities.altsDecoration": {
 					"type": "object",
 					"default": {
 						"backgroundColor": "rgba(0, 255, 0, 0.15)",
@@ -118,7 +118,7 @@
 					},
 					"description": "Customize ALT Track colors"
 				},
-				"emaildev-utilities.imgsTrackColor": {
+				"emaildev-utilities.imgsDecoration": {
 					"type": "object",
 					"default": {
 						"backgroundColor": "rgba(0, 0, 255, 0.15)",

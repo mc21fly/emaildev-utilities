@@ -10,6 +10,12 @@ class CommandRegister {
 			vscode.commands.registerCommand(`emaildev-utilities.${command}`, callback)
 		);
 	}
+
+	registerAll(commands, callback) {
+		commands.forEach(command => {
+			this.register(command, () => callback(command))
+		})
+	}
 }
 
 module.exports = CommandRegister;
