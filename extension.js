@@ -18,26 +18,41 @@ function activate(context) {
 	const decorations = new DecorationRegister();
 	const toggleCommands = ['extension', 'tables', 'styles', 'imgs', 'alts'];
 
-	commands.register('hello', () => {
-		console.log(textEditor.getActiveTextEditor());
+	commands.register('hello', async () => {
+		const ate = textEditor.getActiveTextEditor();
+		const pos = ate.selection.active;
+		const wordR = ate.document.getWordRangeAtPosition(pos, /href="[^"]*?"/);
+		if (wordR) {
+			const newHref = await window.showInputBox();
+			if (newHref) {
+				const newS = `href="${newHref}"`;
+				ate.edit((eb) => {
+					eb.replace(wordR, newS);
+				});
+			}
+		} else {
+			window.showInformationMessage('No href attribute found');
+		}
 	});
 
-	commands.registerAll(toggleCommands, (command) => configuration.toggle(`is${command[0].toUpperCase() + command.substring(1)}Enabled`))
+	commands.registerAll(toggleCommands, (command) =>
+		configuration.toggle(`is${command[0].toUpperCase() + command.substring(1)}Enabled`)
+	);
 
 	window.onDidChangeActiveTextEditor((editor) => {
 		textEditor.setActiveTextEditor(editor);
-		if (editor) decorations.update(configuration, textEditor)
+		if (editor) decorations.update(configuration, textEditor);
 	});
 
 	workspace.onDidChangeConfiguration(() => {
 		configuration.setCurrentConfiguration(workspace);
-		decorations.update(configuration, textEditor)
+		decorations.update(configuration, textEditor);
 	});
 
 	workspace.onDidChangeTextDocument((event) => {
 		const activeTextEditor = textEditor.getActiveTextEditor();
 		if (activeTextEditor && event.document === activeTextEditor.document) {
-			decorations.update(configuration, textEditor)
+			decorations.update(configuration, textEditor);
 		}
 	});
 
