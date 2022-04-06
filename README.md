@@ -38,6 +38,10 @@ Simple extension that will help you to track some elements in your code, that ar
 
 ## Release Notes
 
+### 1.4.1
+
+- `Highlight alt tags` bug fixed.
+
 ### 1.4.0
 
 - `Replace href, alt or src attribute value` function added.
