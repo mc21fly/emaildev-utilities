@@ -9,6 +9,7 @@ Simple extension that will help you to track some elements in your code, that ar
 - Replacing `line-height` given in px, to be unitless and in percentage excluding exceptations.
 - Wraping selection into `<span style="white-space:nowrap;">selection</span>`. If selection contains whitespaces, they will be changed for `&nbsp;` e.g. `Lorem ipsum dolor sit` will be changed into `<span style="white-space: nowrap;">Lorem&nbsp;ipsum&nbsp;dolor&nbsp;sit</span>`
 - Wraping selection into `<sup style="line-height:100%;">selection</sup>`.
+- Replacing `alt`, `src` and `href` attribute values.
 
 ## Commands
 
@@ -19,23 +20,32 @@ Simple extension that will help you to track some elements in your code, that ar
 - `EDU: Enable extension`: turn on/off extenstion
 - `EDU: Replace line-height in px`: convert `line-height` in px to be unitless and in percentage excluding exceptations.
 - `EDU: Wrap selection with <span>`: wrap selection with `<span style="white-space:nowrap;">`_SELECTION_`</span>`
+
   - Default keybinding:
-    - Win: `CTRL`+`W`
-    - Mac: `CMD`+`W`
+    - Win: `CTRL` + `W`
+    - Mac: `CMD` + `W`
 
 - `EDU: Wrap selection with <sup>`: wrap selection with `<sup style="line-height:100%;">`_SELECTION_`</sup>`
+
   - Default keybinding:
-    - Win: `CTRL`+`E`
-    - Mac: `CMD`+`E`
+    - Win: `CTRL` + `E`
+    - Mac: `CMD` + `E`
 
-## Known Issues
-
-There is no known issues.
+- `EDU: Replace href, alt or src attribute value`: replace old value with new one, by copying it into `Input box`. (Cursor must be in one of given attribute position)
+  - Default keybinding:
+    - Win: `ALT` + `F2`
+    - Mac: `ALT` + `F2`
 
 ## Release Notes
 
+### 1.4.0
+
+- `Replace href, alt or src attribute value` function added.
+- Code refactor.
+
 ### 1.3.0
- - `Highlight alt tags` function added.
+
+- `Highlight alt tags` function added.
 
 ### 1.2.0
 

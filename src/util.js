@@ -82,8 +82,28 @@ function getRanges(activeTextEditor, elements) {
 	});
 }
 
-function hello() {
-	console.log('Hello');
+async function replaceAttribute(textEditor) {
+	const activeTextEditor = textEditor.getActiveTextEditor();
+	const cursorPosition = activeTextEditor.selection.active;
+	const attributeRange = activeTextEditor.document.getWordRangeAtPosition(
+		cursorPosition,
+		/(href="[^"]*?"|src="[^"]*?")/g
+	);
+
+	if (attributeRange) {
+		const newAttributeValueInput = await vscode.window.showInputBox();
+
+		if (newAttributeValueInput) {
+			const oldAttributeValue = activeTextEditor.document.getText(attributeRange);
+			const newAttributeValue = oldAttributeValue.replace(/"[^"]*?"/g, `"${newAttributeValueInput}"`);
+
+			activeTextEditor.edit((editBuilder) => {
+				editBuilder.replace(attributeRange, newAttributeValue);
+			});
+		}
+	} else {
+		vscode.window.showInformationMessage('`href` or `src` attribute not found in this position');
+	}
 }
 
 module.exports = {
@@ -92,5 +112,5 @@ module.exports = {
 	searchForImgs,
 	replaceValues,
 	searchForAlts,
-	hello,
+	replaceAttribute,
 };

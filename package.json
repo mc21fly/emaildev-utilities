@@ -2,7 +2,7 @@
 	"name": "emaildev-utilities",
 	"displayName": "EmailDev Utilities",
 	"description": "Few utilities that helps you do email development.",
-	"version": "1.3.0",
+	"version": "1.4.0",
 	"keywords": [
 		"email",
 		"development",
@@ -51,7 +51,7 @@
 				"title": "Enable extension"
 			},
 			{
-				"command": "emaildev-utilities.replaceLh",
+				"command": "emaildev-utilities.replaceLineHeight",
 				"category": "EDU",
 				"title": "Replace line-height in px"
 			},
@@ -71,12 +71,17 @@
 				"title": "Highlight alt tags"
 			},
 			{
-				"command": "emaildev-utilities.hello",
+				"command": "emaildev-utilities.replaceAttributeValue",
 				"category": "EDU",
-				"title": "Hello"
+				"title": "Replace href, alt or src attribute value."
 			}
 		],
 		"keybindings": [
+			{
+				"command": "emaildev-utilities.replaceAttributeValue",
+				"key": "alt+f2",
+				"mac": "alt+f2"
+			},
 			{
 				"command": "emaildev-utilities.spanSelection",
 				"key": "ctrl+w",
@@ -94,7 +99,7 @@
 				"emaildev-utilities.tablesDecoration": {
 					"type": "object",
 					"default": {
-						"backgroundColor": "rgba(255, 255, 0, 0.15)",
+						"backgroundColor": "rgba(255, 255, 0, 0.1)",
 						"border": "1px dotted rgba(255, 255, 0, 1)",
 						"overviewRulerColor": "rgba(255, 255,0, 0.5)"
 					},
@@ -103,7 +108,7 @@
 				"emaildev-utilities.stylesDecoration": {
 					"type": "object",
 					"default": {
-						"backgroundColor": "rgba(255, 0, 0, 0.15)",
+						"backgroundColor": "rgba(255, 0, 0, 0.1)",
 						"border": "1px dotted rgba(255, 0, 0, 1)",
 						"overviewRulerColor": "rgba(255, 0,0, 0.5)"
 					},
@@ -112,7 +117,7 @@
 				"emaildev-utilities.altsDecoration": {
 					"type": "object",
 					"default": {
-						"backgroundColor": "rgba(0, 255, 0, 0.15)",
+						"backgroundColor": "rgba(0, 255, 0, 0.1)",
 						"border": "1px dotted rgba(0, 255, 0, 1)",
 						"overviewRulerColor": "rgba(0, 255,0, 0.5)"
 					},
@@ -121,7 +126,7 @@
 				"emaildev-utilities.imgsDecoration": {
 					"type": "object",
 					"default": {
-						"backgroundColor": "rgba(0, 0, 255, 0.15)",
+						"backgroundColor": "rgba(0, 0, 255, 0.1)",
 						"border": "1px dotted rgba(0, 0, 255, 1)",
 						"overviewRulerColor": "rgba(0, 0, 255, 0.5)"
 					},

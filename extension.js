@@ -9,38 +9,24 @@ const ConfigurationRegister = require('./src/ConfigurationRegister');
 const DecorationRegister = require('./src/DecorationRegister');
 const TextEditorRegister = require('./src/TextEditorRegister');
 
-const util = require('./src/util');
-
 function activate(context) {
 	const commands = new CommandRegister(context);
 	const configuration = new ConfigurationRegister(workspace);
-	const textEditor = new TextEditorRegister(window);
+	const textEditor = new TextEditorRegister(window, configuration);
 	const decorations = new DecorationRegister();
 	const toggleCommands = ['extension', 'tables', 'styles', 'imgs', 'alts'];
 
-	commands.register('hello', async () => {
-		const ate = textEditor.getActiveTextEditor();
-		const pos = ate.selection.active;
-		const wordR = ate.document.getWordRangeAtPosition(pos, /href="[^"]*?"/);
-		if (wordR) {
-			const newHref = await window.showInputBox();
-			if (newHref) {
-				const newS = `href="${newHref}"`;
-				ate.edit((eb) => {
-					eb.replace(wordR, newS);
-				});
-			}
-		} else {
-			window.showInformationMessage('No href attribute found');
-		}
-	});
+	commands.register('supSelection', () => textEditor.replaceSelection('sup'));
+	commands.register('spanSelection', () => textEditor.replaceSelection('span'));
+	commands.register('replaceAttributeValue', () => textEditor.replaceAttributeValue());
+	commands.register('replaceLineHeight', () => textEditor.replaceLineHeight());
 
 	commands.registerAll(toggleCommands, (command) =>
 		configuration.toggle(`is${command[0].toUpperCase() + command.substring(1)}Enabled`)
 	);
 
 	window.onDidChangeActiveTextEditor((editor) => {
-		textEditor.setActiveTextEditor(editor);
+		textEditor.setActiveTextEditor(editor, configuration);
 		if (editor) decorations.update(configuration, textEditor);
 	});
 
