@@ -10,6 +10,7 @@ Simple extension that will help you to track some elements in your code, that ar
 - Wraping selection into `<span style="white-space:nowrap;">selection</span>`. If selection contains whitespaces, they will be changed for `&nbsp;` e.g. `Lorem ipsum dolor sit` will be changed into `<span style="white-space: nowrap;">Lorem&nbsp;ipsum&nbsp;dolor&nbsp;sit</span>`
 - Wraping selection into `<sup style="line-height:100%;">selection</sup>`.
 - Replacing `alt`, `src` and `href` attribute values.
+- Adding `&zwj;` between characters in selection.
 
 ## Commands
 
@@ -35,6 +36,11 @@ Simple extension that will help you to track some elements in your code, that ar
   - Default keybinding:
     - Win: `ALT` + `F2`
     - Mac: `ALT` + `F2`
+
+- `EDU: Put &zwj; between characters in selection`: add `&zwj;` between characters in selection.
+  - Default keybinding:
+    - Win: `CTRL` + `ALT` + `W`
+    - Mac: `CMD` + `ALT` + `W`
 
 ## Release Notes
 

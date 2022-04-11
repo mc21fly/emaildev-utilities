@@ -61,6 +61,8 @@ class TextEditorRegister {
 					return `<span style="whitespace:nowrap;">${text.replaceAll(' ', '&nbsp;')}</span>`;
 				case 'sup':
 					return `<sup style="line-height:100%;">${text}</sup>`;
+				case 'zwj':
+					return `${text.replaceAll('', '&zwj;')}`
 				default:
 					return text;
 			}
