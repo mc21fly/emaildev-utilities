@@ -44,6 +44,10 @@ Simple extension that will help you to track some elements in your code, that ar
 
 ## Release Notes
 
+### 1.5.0
+
+- `Put &zwj; between characters in selection` function added.
+
 ### 1.4.1
 
 - `Highlight alt tags` bug fixed.
