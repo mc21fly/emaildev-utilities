@@ -2,7 +2,7 @@
 	"name": "emaildev-utilities",
 	"displayName": "EmailDev Utilities",
 	"description": "Few utilities that helps you do email development.",
-	"version": "1.5.2",
+	"version": "1.6.0",
 	"keywords": [
 		"email",
 		"development",
@@ -71,6 +71,11 @@
 				"title": "Put &#8205; between characters in selection"
 			},
 			{
+				"command": "emaildev-utilities.strongSelection",
+				"category": "EDU",
+				"title": "Wrap selection with <strong>"
+			},
+			{
 				"command": "emaildev-utilities.alts",
 				"category": "EDU",
 				"title": "Highlight alt tags"
@@ -101,6 +106,11 @@
 				"command": "emaildev-utilities.zwjSelection",
 				"key": "ctrl+alt+w",
 				"mac": "cmd+alt+w"
+			},
+			{
+				"command": "emaildev-utilities.strongSelection",
+				"key": "ctrl+alt+q",
+				"mac": "cmd+alt+q"
 			}
 		],
 		"configuration": {

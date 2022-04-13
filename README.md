@@ -11,6 +11,7 @@ Simple extension that will help you to track some elements in your code, that ar
 - Wraping selection into `<sup style="line-height:100%;">selection</sup>`.
 - Replacing `alt`, `src` and `href` attribute values.
 - Adding `&#8205;` between characters in selection.
+- Wraping selection into `<strong style="font-weight:600;">selection</strong>`.
 
 ## Commands
 
@@ -42,16 +43,25 @@ Simple extension that will help you to track some elements in your code, that ar
     - Win: `CTRL` + `ALT` + `W`
     - Mac: `CMD` + `ALT` + `W`
 
+- `EDU: Wrap selection with <strong>`: wrap selection with `<strong style="font-weight:600;">`_SELECTION_`</strong>`
+
+  - Default keybinding:
+    - Win: `CTRL` + `ALT` + `Q`
+    - Mac: `CMD` + `ALT` + `Q`
+
 ## Release Notes
+
+### 1.6.0
+- `Wrap selection with <strong>` function added.
 
 ### 1.5.2
 
-- Readme fix.
+- Readme fixed.
 - `&zwj;` changed to `&#8205;`.
 
 ### 1.5.1
 
-- `Wrap selection with <span>` bug fix.
+- `Wrap selection with <span>` bug fixed.
 
 ### 1.5.0
 

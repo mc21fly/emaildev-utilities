@@ -62,7 +62,9 @@ class TextEditorRegister {
 				case 'sup':
 					return `<sup style="line-height:100%;">${text}</sup>`;
 				case 'zwj':
-					return `${text.replaceAll('', '&#8205;')}`
+					return `${text.replaceAll('', '&#8205;')}`;
+				case 'strong':
+					return `<strong style="font-weight:600;">${text}</strong>`
 				default:
 					return text;
 			}

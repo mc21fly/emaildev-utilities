@@ -19,6 +19,7 @@ function activate(context) {
 	commands.register('supSelection', () => textEditor.replaceSelection('sup'));
 	commands.register('spanSelection', () => textEditor.replaceSelection('span'));
 	commands.register('zwjSelection', () => textEditor.replaceSelection('zwj'));
+	commands.register('strongSelection', () => textEditor.replaceSelection('strong'));
 	commands.register('replaceAttributeValue', () => textEditor.replaceAttributeValue());
 	commands.register('replaceLineHeight', () => textEditor.replaceLineHeight());
 
