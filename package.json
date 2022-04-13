@@ -2,7 +2,7 @@
 	"name": "emaildev-utilities",
 	"displayName": "EmailDev Utilities",
 	"description": "Few utilities that helps you do email development.",
-	"version": "1.5.0",
+	"version": "1.5.2",
 	"keywords": [
 		"email",
 		"development",
@@ -68,7 +68,7 @@
 			{
 				"command": "emaildev-utilities.zwjSelection",
 				"category": "EDU",
-				"title": "Put &zwj; between characters in selection"
+				"title": "Put &#8205; between characters in selection"
 			},
 			{
 				"command": "emaildev-utilities.alts",

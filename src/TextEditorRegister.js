@@ -58,11 +58,11 @@ class TextEditorRegister {
 		function wrap(type, text) {
 			switch (type) {
 				case 'span':
-					return `<span style="whitespace:nowrap;">${text.replaceAll(' ', '&nbsp;')}</span>`;
+					return `<span style="white-space:nowrap;">${text.replaceAll(' ', '&nbsp;')}</span>`;
 				case 'sup':
 					return `<sup style="line-height:100%;">${text}</sup>`;
 				case 'zwj':
-					return `${text.replaceAll('', '&zwj;')}`
+					return `${text.replaceAll('', '&#8205;')}`
 				default:
 					return text;
 			}
