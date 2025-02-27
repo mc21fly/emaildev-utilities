@@ -20,6 +20,7 @@ function activate(context) {
 	commands.register('spanSelection', () => textEditor.replaceSelection('span'));
 	commands.register('zwjSelection', () => textEditor.replaceSelection('zwj'));
 	commands.register('strongSelection', () => textEditor.replaceSelection('strong'));
+	commands.register('aSelection', () => textEditor.replaceSelection('a'));
 	commands.register('replaceAttributeValue', () => textEditor.replaceAttributeValue());
 	commands.register('replaceLineHeight', () => textEditor.replaceLineHeight());
 

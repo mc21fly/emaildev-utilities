@@ -84,6 +84,11 @@
 				"command": "emaildev-utilities.replaceAttributeValue",
 				"category": "EDU",
 				"title": "Replace href, alt or src attribute value."
+			},
+			{
+				"command": "emaildev-utilities.aSelection",
+				"category": "EDU",
+				"title": "Wrap a tag"
 			}
 		],
 		"keybindings": [
@@ -111,6 +116,11 @@
 				"command": "emaildev-utilities.strongSelection",
 				"key": "ctrl+alt+q",
 				"mac": "cmd+alt+q"
+			},
+			{
+				"command": "emaildev-utilities.aSelection",
+				"key": "ctrl+alt+r",
+				"mac": "cmd+alt+r"
 			}
 		],
 		"configuration": {
