@@ -64,6 +64,8 @@ class TextEditorRegister {
                     return `<strong style="font-weight: 600;">${text}</strong>`;
                 case "a":
                     return `<a href="" target="_blank" style="color: #414042; text-decoration: underline;">${text}</a>`;
+                case "i":
+                    return `<i>${text}</i>`;
                 default:
                     return text;
             }
