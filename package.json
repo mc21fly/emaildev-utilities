@@ -1,15 +1,8 @@
 {
     "name": "emaildev-utilities",
     "displayName": "EmailDev Utilities",
-    "description": "Few utilities that helps you do email development.",
-    "version": "1.6.3",
-    "keywords": [
-        "email",
-        "development",
-        "html",
-        "highlight",
-        "emaildev"
-    ],
+    "description": "A set of utilities to speed up email development in VS Code.",
+    "version": "1.6.4",
     "publisher": "mc21fly",
     "license": "MIT",
     "icon": "assets/icon.png",
@@ -28,12 +21,19 @@
         "onStartupFinished"
     ],
     "main": "./extension.js",
+    "keywords": [
+        "email",
+        "development",
+        "html",
+        "highlight",
+        "emaildev"
+    ],
     "contributes": {
         "commands": [
             {
-                "command": "emaildev-utilities.styles",
+                "command": "emaildev-utilities.extension",
                 "category": "EDU",
-                "title": "Highlight styles with font-size and line-height"
+                "title": "Enable extension"
             },
             {
                 "command": "emaildev-utilities.tables",
@@ -41,19 +41,29 @@
                 "title": "Highlight tables without needed attributes"
             },
             {
+                "command": "emaildev-utilities.styles",
+                "category": "EDU",
+                "title": "Highlight styles with font-size and line-height"
+            },
+            {
                 "command": "emaildev-utilities.imgs",
                 "category": "EDU",
                 "title": "Highlight imgs without alt tags"
             },
             {
-                "command": "emaildev-utilities.extension",
+                "command": "emaildev-utilities.alts",
                 "category": "EDU",
-                "title": "Enable extension"
+                "title": "Highlight alt tags"
             },
             {
                 "command": "emaildev-utilities.replaceLineHeight",
                 "category": "EDU",
                 "title": "Replace line-height in px"
+            },
+            {
+                "command": "emaildev-utilities.replaceAttributeValue",
+                "category": "EDU",
+                "title": "Replace href, alt or src attribute value"
             },
             {
                 "command": "emaildev-utilities.spanSelection",
@@ -66,34 +76,29 @@
                 "title": "Wrap selection with <sup>"
             },
             {
-                "command": "emaildev-utilities.zwjSelection",
-                "category": "EDU",
-                "title": "Put &#8205; between characters in selection"
-            },
-            {
                 "command": "emaildev-utilities.strongSelection",
                 "category": "EDU",
                 "title": "Wrap selection with <strong>"
             },
             {
-                "command": "emaildev-utilities.alts",
-                "category": "EDU",
-                "title": "Highlight alt tags"
-            },
-            {
-                "command": "emaildev-utilities.replaceAttributeValue",
-                "category": "EDU",
-                "title": "Replace href, alt or src attribute value."
-            },
-            {
                 "command": "emaildev-utilities.aSelection",
                 "category": "EDU",
-                "title": "Wrap a tag"
+                "title": "Wrap selection with <a>"
             },
             {
                 "command": "emaildev-utilities.iSelection",
                 "category": "EDU",
-                "title": "Wrap i tag"
+                "title": "Wrap selection with <i>"
+            },
+            {
+                "command": "emaildev-utilities.zwjSelection",
+                "category": "EDU",
+                "title": "Insert &#8205; between characters in selection"
+            },
+            {
+                "command": "emaildev-utilities.copyAndCompress",
+                "category": "EDU",
+                "title": "Copy and Compress Selection"
             }
         ],
         "keybindings": [
@@ -113,11 +118,6 @@
                 "mac": "cmd+e"
             },
             {
-                "command": "emaildev-utilities.zwjSelection",
-                "key": "ctrl+alt+w",
-                "mac": "cmd+alt+w"
-            },
-            {
                 "command": "emaildev-utilities.strongSelection",
                 "key": "ctrl+alt+q",
                 "mac": "cmd+alt+q"
@@ -131,37 +131,72 @@
                 "command": "emaildev-utilities.iSelection",
                 "key": "ctrl+alt+e",
                 "mac": "cmd+alt+e"
+            },
+            {
+                "command": "emaildev-utilities.zwjSelection",
+                "key": "ctrl+alt+w",
+                "mac": "cmd+alt+w"
+            },
+            {
+                "command": "emaildev-utilities.copyAndCompress",
+                "key": "alt+q",
+                "when": "editorTextFocus && editorHasSelection"
             }
         ],
         "configuration": {
             "title": "EmailDev Utilities",
             "properties": {
+                "emaildev-utilities.isExtensionEnabled": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Enable extension"
+                },
+                "emaildev-utilities.isTablesEnabled": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Enable table tracking"
+                },
+                "emaildev-utilities.isStylesEnabled": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Enable style tracking"
+                },
+                "emaildev-utilities.isImgsEnabled": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Enable image tracking"
+                },
+                "emaildev-utilities.isAltsEnabled": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Enable alt tracking"
+                },
                 "emaildev-utilities.tablesDecoration": {
                     "type": "object",
                     "default": {
                         "backgroundColor": "rgba(255, 255, 0, 0.1)",
                         "border": "1px dotted rgba(255, 255, 0, 1)",
-                        "overviewRulerColor": "rgba(255, 255,0, 0.5)"
+                        "overviewRulerColor": "rgba(255, 255, 0, 0.5)"
                     },
-                    "description": "Customize TABLES Track colors"
+                    "description": "Customize TABLES highlight colors"
                 },
                 "emaildev-utilities.stylesDecoration": {
                     "type": "object",
                     "default": {
                         "backgroundColor": "rgba(255, 0, 0, 0.1)",
                         "border": "1px dotted rgba(255, 0, 0, 1)",
-                        "overviewRulerColor": "rgba(255, 0,0, 0.5)"
+                        "overviewRulerColor": "rgba(255, 0, 0, 0.5)"
                     },
-                    "description": "Customize STYLES Track colors"
+                    "description": "Customize STYLES highlight colors"
                 },
                 "emaildev-utilities.altsDecoration": {
                     "type": "object",
                     "default": {
                         "backgroundColor": "rgba(0, 255, 0, 0.1)",
                         "border": "1px dotted rgba(0, 255, 0, 1)",
-                        "overviewRulerColor": "rgba(0, 255,0, 0.5)"
+                        "overviewRulerColor": "rgba(0, 255, 0, 0.5)"
                     },
-                    "description": "Customize ALT Track colors"
+                    "description": "Customize ALT highlight colors"
                 },
                 "emaildev-utilities.imgsDecoration": {
                     "type": "object",
@@ -170,32 +205,7 @@
                         "border": "1px dotted rgba(0, 0, 255, 1)",
                         "overviewRulerColor": "rgba(0, 0, 255, 0.5)"
                     },
-                    "description": "Customize IMG Track colors"
-                },
-                "emaildev-utilities.isTablesEnabled": {
-                    "type": "boolean",
-                    "default": true,
-                    "description": "Enable tracking tables"
-                },
-                "emaildev-utilities.isStylesEnabled": {
-                    "type": "boolean",
-                    "default": true,
-                    "description": "Enable tracking styles"
-                },
-                "emaildev-utilities.isImgsEnabled": {
-                    "type": "boolean",
-                    "default": true,
-                    "description": "Enable tracking imgs"
-                },
-                "emaildev-utilities.isExtensionEnabled": {
-                    "type": "boolean",
-                    "default": true,
-                    "description": "Enable extenstion"
-                },
-                "emaildev-utilities.isAltsEnabled": {
-                    "type": "boolean",
-                    "default": true,
-                    "description": "Enable tracking ALT"
+                    "description": "Customize IMG highlight colors"
                 },
                 "emaildev-utilities.exceptions": {
                     "type": "array",
@@ -206,7 +216,7 @@
                         "0, 0",
                         "18, 48"
                     ],
-                    "markdownDescription": "Exceptions for replacing line-height and highlighting styles. To add new please follow rule: `font-size px, line-height px`"
+                    "markdownDescription": "Exceptions for replacing line-height and highlighting styles. Use format: `font-size px, line-height px`"
                 }
             }
         }

@@ -1,116 +1,147 @@
-const vscode = require('vscode');
+"use strict";
 
+const vscode = require("vscode");
+
+/**
+ * Checks if a (fontSize, lineHeight) combination is in the exception list.
+ * @param {string[]} exceptions - Array of exception strings like "16, 24"
+ * @param {string} value - Value to compare against.
+ */
 function isExcepted(exceptions, value) {
-	return exceptions.includes(value);
+    return Array.isArray(exceptions) && exceptions.includes(value);
 }
 
+/**
+ * Replaces line-height values with both percent and unitless versions,
+ * unless the combination is listed in exceptions.
+ */
 function replaceValues(exceptions, style) {
-	const lineHeight = style.match(/line-height:\s*\d+px;/gm);
-	const fontSize = style.match(/font-size:\s*\d+px;/gm);
-	const lineHeightValue = parseInt(lineHeight[0].match(/\d+/));
-	const fontSizeValue = parseInt(fontSize[0].match(/\d+/));
-	const value = `${fontSizeValue}, ${lineHeightValue}`;
+    const lineHeightMatch = style.match(/line-height:\s*(\d+)px;/);
+    const fontSizeMatch = style.match(/font-size:\s*(\d+)px;/);
 
-	if (!isExcepted(exceptions, value)) {
-		const valueUnitless = parseFloat((lineHeightValue / fontSizeValue).toFixed(2));
-		const valuePercent = parseInt(((valueUnitless - 1) / 2) * 100 + 100);
+    if (!lineHeightMatch || !fontSizeMatch) return style;
 
-		const replacedStyle = style.replace(
-			/line-height:\s*\d+px;/gm,
-			`line-height: ${valuePercent}%; line-height: ${valueUnitless}!important;`
-		);
+    const lineHeightValue = parseInt(lineHeightMatch[1]);
+    const fontSizeValue = parseInt(fontSizeMatch[1]);
+    const pairValue = `${fontSizeValue}, ${lineHeightValue}`;
 
-		return replacedStyle;
-	}
+    if (isExcepted(exceptions, pairValue)) {
+        return style; // Skip modification if in exceptions
+    }
 
-	return style;
+    // Compute ratio and percent
+    const ratio = parseFloat((lineHeightValue / fontSizeValue).toFixed(2));
+    const percent = Math.round(((ratio - 1) / 2) * 100 + 100);
+
+    return style.replace(/line-height:\s*\d+px;/, `line-height: ${percent}%; line-height: ${ratio}!important;`);
 }
 
+/**
+ * Finds <table> tags missing specific presentation attributes.
+ */
 function searchForTables(activeTextEditor) {
-	const code = activeTextEditor.document.getText();
-	const allTables = code.match(/<table[^>]*>/gm) || [];
-	const tablesWithAttributes =
-		code.match(
-			/<table[^>]*?(?=[^>]*?role="presentation")[^>]*?(?=[^>]*?border="0")[^>]*?(?=[^>]*?cellpadding="0")[^>]*?(?=[^>]*?cellspacing="0")[^>]*?>/gm
-		) || [];
-	const tablesWithoutAttributes = allTables.filter((table) => !tablesWithAttributes.includes(table));
-	const tablesRanges = getRanges(activeTextEditor, tablesWithoutAttributes);
+    const code = activeTextEditor.document.getText();
+    const allTables = code.match(/<table[^>]*>/g) || [];
 
-	return tablesRanges;
+    const compliantTables = code.match(/<table[^>]*?(?=[^>]*role="presentation")(?=[^>]*border="0")(?=[^>]*cellpadding="0")(?=[^>]*cellspacing="0")[^>]*?>/g) || [];
+
+    const missingAttrTables = allTables.filter((t) => !compliantTables.includes(t));
+
+    return getRanges(activeTextEditor, missingAttrTables);
 }
 
+/**
+ * Finds inline styles that define both font-size and line-height.
+ */
 function searchForStyles(activeTextEditor) {
-	const code = activeTextEditor.document.getText();
-	const styles =
-		code.match(/style="[^"]*?(?=[^f]*?font-size:[^\d]*?\d+px)(?=[^l]*?line-height:[^\d]*?\d+px)[^"]*?"/gm) ||
-		[];
-	const stylesRanges = getRanges(activeTextEditor, styles);
+    const code = activeTextEditor.document.getText();
+    const styles = code.match(/style="[^"]*?(?=[^"]*font-size:\s*\d+px)(?=[^"]*line-height:\s*\d+px)[^"]*?"/g) || [];
 
-	return stylesRanges;
+    return getRanges(activeTextEditor, styles);
 }
 
-function searchForAlts(activeTextEditor) {
-	const code = activeTextEditor.document.getText();
-	const alts = code.match(/alt="[^"]*?"/gm) || [];
-	const altsRanges = getRanges(activeTextEditor, alts);
-
-	return altsRanges;
-}
-
+/**
+ * Finds image tags missing alt attributes.
+ */
 function searchForImgs(activeTextEditor) {
-	const code = activeTextEditor.document.getText();
-	const allImgs = code.match(/<img[^>]*?>/gm) || [];
-	const imgWithAlt = code.match(/<img[^>]*alt="\s*?([^"]+)\s*?"[^>]*>/gm) || [];
-	const imgWithoutAlt = allImgs.filter((img) => !imgWithAlt.includes(img));
-	const imgRanges = getRanges(activeTextEditor, imgWithoutAlt);
+    const code = activeTextEditor.document.getText();
+    const allImgs = code.match(/<img[^>]*?>/g) || [];
+    const imgsWithAlt = code.match(/<img[^>]*alt="\s*?[^"]+?\s*?"[^>]*>/g) || [];
 
-	return imgRanges;
+    const imgsWithoutAlt = allImgs.filter((img) => !imgsWithAlt.includes(img));
+    return getRanges(activeTextEditor, imgsWithoutAlt);
 }
 
+/**
+ * Finds all alt="..." attributes in the document.
+ */
+function searchForAlts(activeTextEditor) {
+    const code = activeTextEditor.document.getText();
+    const alts = code.match(/alt="[^"]*?"/g) || [];
+    return getRanges(activeTextEditor, alts);
+}
+
+/**
+ * Returns VSCode Range objects for each matched element.
+ */
 function getRanges(activeTextEditor, elements) {
-	let currentIndex = 0;
-	const code = activeTextEditor.document.getText();
+    if (!elements.length) return [];
 
-	return elements.map((element) => {
-		const elementIndex = code.indexOf(element, currentIndex);
-		currentIndex = elementIndex + element.length;
+    const document = activeTextEditor.document;
+    const text = document.getText();
+    let searchStart = 0;
 
-		const startPos = activeTextEditor.document.positionAt(elementIndex);
-		const endPos = activeTextEditor.document.positionAt(elementIndex + element.length);
+    return elements
+        .map((element) => {
+            const idx = text.indexOf(element, searchStart);
+            if (idx === -1) return null;
 
-		return new vscode.Range(startPos, endPos);
-	});
+            searchStart = idx + element.length;
+
+            const start = document.positionAt(idx);
+            const end = document.positionAt(idx + element.length);
+
+            return new vscode.Range(start, end);
+        })
+        .filter(Boolean);
 }
 
+/**
+ * Prompts user to replace `href` or `src` attribute values under cursor.
+ */
 async function replaceAttribute(textEditor) {
-	const activeTextEditor = textEditor.getActiveTextEditor();
-	const cursorPosition = activeTextEditor.selection.active;
-	const attributeRange = activeTextEditor.document.getWordRangeAtPosition(
-		cursorPosition,
-		/(href="[^"]*?"|src="[^"]*?")/g
-	);
+    const editor = textEditor.getActiveTextEditor();
+    if (!editor) {
+        vscode.window.showInformationMessage("No active text editor found.");
+        return;
+    }
 
-	if (attributeRange) {
-		const newAttributeValueInput = await vscode.window.showInputBox();
+    const cursor = editor.selection.active;
+    const attrRange = editor.document.getWordRangeAtPosition(cursor, /(href="[^"]*"|src="[^"]*")/);
 
-		if (newAttributeValueInput) {
-			const oldAttributeValue = activeTextEditor.document.getText(attributeRange);
-			const newAttributeValue = oldAttributeValue.replace(/"[^"]*?"/g, `"${newAttributeValueInput}"`);
+    if (!attrRange) {
+        vscode.window.showInformationMessage("No href or src attribute found here.");
+        return;
+    }
 
-			activeTextEditor.edit((editBuilder) => {
-				editBuilder.replace(attributeRange, newAttributeValue);
-			});
-		}
-	} else {
-		vscode.window.showInformationMessage('`href` or `src` attribute not found in this position');
-	}
+    const newValue = await vscode.window.showInputBox({
+        prompt: "Enter new attribute value",
+        placeHolder: "https://example.com",
+    });
+
+    if (!newValue) return;
+
+    const oldValue = editor.document.getText(attrRange);
+    const replacedValue = oldValue.replace(/"[^"]*"/, `"${newValue}"`);
+
+    await editor.edit((editBuilder) => editBuilder.replace(attrRange, replacedValue));
 }
 
 module.exports = {
-	searchForTables,
-	searchForStyles,
-	searchForImgs,
-	replaceValues,
-	searchForAlts,
-	replaceAttribute,
+    searchForTables,
+    searchForStyles,
+    searchForImgs,
+    searchForAlts,
+    replaceValues,
+    replaceAttribute,
 };
