@@ -61,7 +61,7 @@ class TextEditorRegister {
                 case "zwj":
                     return `${text.replaceAll("", "&#8205;")}`;
                 case "strong":
-                    return `<strong style="font-weight: 600;">${text}</strong>`;
+                    return `<strong style="font-weight: 900;">${text}</strong>`;
                 case "a":
                     return `<a href="" target="_blank" style="color: #414042; text-decoration: underline;">${text}</a>`;
                 case "i":
