@@ -155,8 +155,13 @@ class TextEditorRegister {
         }
 
         const compressed = text
-            .replace(/[\s\n]+/g, " ") // collapse multiple spaces/newlines
-            .replace(/\s>/g, ">") // remove spaces before >
+            .replace(/[\s\n]+/g, " ") // 1. Spłaszcz wszystko do jednej linii
+            .replace(/\s+>/g, ">") // 2. Usuń spacje przed >
+            .replace(/style="([^"]*)"/g, (match, p1) => {
+                // 3. Wewnątrz atrybutu style usuń spacje TYLKO po : i ;
+                const cleanedStyle = p1.replace(/(?<=[:;])\s+/g, "");
+                return `style="${cleanedStyle}"`;
+            })
             .trim();
 
         try {
