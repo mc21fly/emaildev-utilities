@@ -2,7 +2,7 @@
     "name": "emaildev-utilities",
     "displayName": "EmailDev Utilities",
     "description": "A set of utilities to speed up email development in VS Code.",
-    "version": "1.6.4",
+    "version": "1.6.5",
     "publisher": "mc21fly",
     "license": "MIT",
     "icon": "assets/icon.png",
