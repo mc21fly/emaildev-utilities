@@ -82,7 +82,7 @@ class TextEditorRegister {
             return;
         }
 
-        const wrapped = this.wrapText(type, textToWrap);
+        const wrapped = await this.wrapText(type, textToWrap);
 
         await editor.edit((editBuilder) => {
             editBuilder.replace(selection, wrapped);
@@ -92,7 +92,7 @@ class TextEditorRegister {
     /**
      * Internal helper: wraps text based on type.
      */
-    wrapText(type, text) {
+    async wrapText(type, text) {
         switch (type) {
             case "span":
                 return `<span style="white-space:nowrap;">${text.replaceAll(" ", "&nbsp;")}</span>`;
@@ -102,8 +102,20 @@ class TextEditorRegister {
                 return `${text.replaceAll("", "&#8205;")}`;
             case "strong":
                 return `<strong style="font-weight:900;">${text}</strong>`;
-            case "a":
-                return `<a href="" target="_blank" style="color:#414042;text-decoration:underline;">${text}</a>`;
+            case "a": {
+                // 1. Fetch the text currently stored in the clipboard
+                const clipboardText = await vscode.env.clipboard.readText();
+                const trimmedUrl = clipboardText.trim();
+
+                // 2. Simple regex to see if it starts with http:// or https:// and contains no breaking spaces
+                const urlRegex = /^(https?:\/\/[^\s$.?#].[^\s]*)$/i;
+                const hasValidUrl = urlRegex.test(trimmedUrl);
+
+                // 3. Fallback to an empty string if clipboard content isn't a link
+                const hrefValue = hasValidUrl ? trimmedUrl : "";
+
+                return `<a href="${hrefValue}" target="_blank" style="color:#414042;text-decoration:underline;">${text}</a>`;
+            }
             case "i":
                 return `<i>${text}</i>`;
             default:
